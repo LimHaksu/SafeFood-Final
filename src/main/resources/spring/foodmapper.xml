@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : package + class name : mapper를 구별하기 위한 이름 -->
+<mapper namespace="com.ssafy.model.FoodMapper">
+
+	<!-- id : 태그 아이디, resultType : 결과의 타입, parameterType : 파라미터 타입 -->
+	<select id="search" resultType="food" parameterType="int">
+		select * from food where code = #{code}
+	</select>
+
+	<select id="searchAll" resultType="food">
+		select * from food 
+	</select>
+	
+	<select id="searchAllName" resultType="food" parameterType="String">
+		select * from food where name like #{word}
+	</select>
+	
+	<select id="searchAllMaker" resultType="food" parameterType="String">
+		select * from food where maker like #{word}
+	</select>	
+	
+	<select id="searchAllMaterial" resultType="food" parameterType="String">
+		select * from food where material like #{word}
+	</select>
+
+
+</mapper>

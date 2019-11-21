@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.board.rest">
+	<select id="select" resultType="post" parameterType="String">
+		select * from board
+		<if test="value != null"> <!-- value: 하나의 파라미터가 넘어올 때 -->
+			where no=#{no}
+		</if>
+	</select>
+	
+	<insert id="insert" parameterType="post">
+		insert into
+		board (writer, title, contents, comments)
+		values( #{writer}, #{title}, #{contents}, #{comments} )
+	</insert>
+	
+	<update id="update" parameterType="post">
+		update board 
+		set writer=#{writer}, title=#{title}, contents=#{contents}, comments=#{comments}
+		where no=#{no}
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		delete from board
+		where no=#{no}
+	</delete>
+</mapper>
+
+
+
+
+
+

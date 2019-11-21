@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+/* input elements */
+.table {
+	background-color: #FFFFFF;
+}
+
+.table>thead {
+	background-color: #909090;
+	color: #ffffff;
+}
+
+#contents {
+	background-color: #ffffff;
+}
+
+#comments {
+	background-color: #ffffff;
+}
+
+.btn-default {
+	background-color: #ffffff;
+}

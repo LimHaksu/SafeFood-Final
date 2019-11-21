@@ -10,7 +10,7 @@
 		<!-- <typeAlias type="com.ssafy.pms.dto.Phone"    alias="phone"/> -->
 		<typeAlias type="com.ssafy.dto.Food"    alias="food"/>
 		<typeAlias type="com.ssafy.dto.User"    alias="user"/>
-		<typeAlias type="com.ssafy.dto.Post"   		alias="post"/>
+		<typeAlias type="com.ssafy.dto.Post"   	alias="post"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="spring/foodmapper.xml" />

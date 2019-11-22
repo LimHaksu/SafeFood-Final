@@ -1,0 +1,172 @@
+<template>
+  <header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <b-button v-b-modal.modal-1>Sign up</b-button>
+      <b-button v-b-modal.modal-login>Login</b-button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        id="btn_logout"
+        onClick="location.href='logout.do'"
+      >Logout</button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        id="btn_user_info"
+        onClick="location.href='userInfo.jsp'"
+      >회원정보</button>
+    </nav>
+    <form action="insert.do" method="post">
+      <b-modal b-modal id="modal-1" hide-footer>
+        <h4 class="modal-title" id="singInlLabel">회원가입</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <!-- </div> -->
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="id" class="control-label">아이디:</label>
+            <input type="text" name="id" class="form-control" id="userid" value="${user.id}" />
+          </div>
+          <div class="form-group">
+            <label for="password" class="control-label">비밀번호:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="userpw"
+              name="password"
+              placeholder="숫자 영어 포함 6글자 이상"
+              value="${user.password}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="name" class="control-label">이름:</label>
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              id="name"
+              placeholder="User Name"
+              value="${user.name}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="address" class="control-label">주소:</label>
+            <input
+              type="text"
+              name="address"
+              class="form-control"
+              id="address"
+              placeholder="address"
+              value="${user.address}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="phone" class="control-label">전화번호:</label>
+            <input
+              type="text"
+              name="phone"
+              class="form-control"
+              id="phone"
+              placeholder="010-xxxx-xxxx"
+              value="${user.phone}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="allergic" class="control-label">알레르기:</label>
+            <input type="checkbox" name="allergy" value="대두" />
+            대두
+            <input type="checkbox" name="allergy" value="땅콩" />
+            땅콩
+            <input type="checkbox" name="allergy" value="우유" />
+            우유
+            <input type="checkbox" name="allergy" value="게" />
+            게
+            <input type="checkbox" name="allergy" value="새우" />
+            새우
+            <input type="checkbox" name="allergy" value="참치" />
+            참치
+            <input type="checkbox" name="allergy" value="연어" />
+            연어
+            <input type="checkbox" name="allergy" value="쑥" />
+            쑥
+            <input type="checkbox" name="allergy" value="소고기" />
+            소고기
+            <input type="checkbox" name="allergy" value="닭고기" />
+            닭고기
+            <input type="checkbox" name="allergy" value="돼지고기" />
+            돼지고기
+            <input type="checkbox" name="allergy" value="복숭아" />
+            복숭아
+            <input type="checkbox" name="allergy" value="민들레" />
+            민들레
+            <input type="checkbox" name="allergy" value="계란흰자" />
+            계란흰자
+          </div>
+        </div>
+        <input type="hidden" name="checkboxStr" id="checkbox_str" />
+        <div class="modal-footer">
+          <input type="submit" value="등록" class="btn btn-primary" id="btn_signup" />
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </b-modal>
+    </form>
+
+    <b-modal b-modal id="modal-login" hide-footer>
+      <h4 class="modal-title" id="LoginLabel">로그인</h4>
+      <form method="post" action="login.do" id="layout_login">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="userid" class="control-label">아이디:</label>
+            <input type="text" class="form-control" id="userid" name="id" />
+          </div>
+          <div class="form-group">
+            <label for="password" class="control-label">비밀번호:</label>
+            <input type="password" class="form-control" id="userpw" name="password" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-light" id="userLogin">로그인</button>
+          <button type="button" class="btn btn-dark" id="userPwFind">비밀번호 찾기</button>
+        </div>
+      </form>
+    </b-modal>
+
+    <nav class="navbar navbar-expand-sm navbar-white bg-white">
+      <div class="collapse navbar-collapse" id="info">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="#" class="nav-link">공지사항</a>
+          </li>
+          <li class="nav-item" id="btn_product_info">
+            <a href="#" class="nav-link">상품정보</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">베스트 섭취 정보</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">내 섭취 정보</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">예상 섭취 정보</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">검색</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Q&A</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+</template>
+
+
+
+<script>
+export default {};
+</script>
+<style>
+</style>

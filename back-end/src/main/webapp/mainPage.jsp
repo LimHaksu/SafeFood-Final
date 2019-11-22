@@ -3,27 +3,34 @@
 	import="java.util.*, java.lang.*, com.ssafy.dao.*, com.ssafy.service.* , com.ssafy.util.*, com.ssafy.vo.*"%> --%>
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<!-- JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<!-- JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-			<button type="button" class="btn btn-secondary" data-toggle="modal" id="btn_signup" data-target="#signin" data-whatever="@mdo">Sign up</button>
-			<button type="button" class="btn btn-secondary" data-toggle="modal" id="btn_login" data-target="#login" data-whatever="@mdo">Login</button>
-			<button type="button" class="btn btn-secondary" id="btn_logout" onClick="location.href='logout.do'">Logout</button>
-			<button type="button" class="btn btn-secondary" id="btn_user_info" onClick="location.href='userInfo.jsp'">회원정보</button>
+			<button type="button" class="btn btn-secondary" data-toggle="modal" id="btn_signup" data-target="#signin"
+				data-whatever="@mdo">Sign up</button>
+			<button type="button" class="btn btn-secondary" data-toggle="modal" id="btn_login" data-target="#login"
+				data-whatever="@mdo">Login</button>
+			<button type="button" class="btn btn-secondary" id="btn_logout"
+				onClick="location.href='logout.do'">Logout</button>
+			<button type="button" class="btn btn-secondary" id="btn_user_info"
+				onClick="location.href='userInfo.jsp'">회원정보</button>
 		</nav>
 		<form action="insert.do" method="post">
-			<div class="modal fade" id="signin" tabindex="-1" role="dialog" aria-labelledby="singInlLabel" aria-hidden="true">
+			<div class="modal fade" id="signin" tabindex="-1" role="dialog" aria-labelledby="singInlLabel"
+				aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -40,19 +47,23 @@
 							</div>
 							<div class="form-group">
 								<label for="password" class="control-label">비밀번호:</label>
-								<input type="password" class="form-control" id="userpw" name="password" placeholder="숫자 영어 포함 6글자 이상" value="${user.password}">
+								<input type="password" class="form-control" id="userpw" name="password"
+									placeholder="숫자 영어 포함 6글자 이상" value="${user.password}">
 							</div>
 							<div class="form-group">
 								<label for="name" class="control-label">이름:</label>
-								<input type="text" name="name" class="form-control" id="name" placeholder="User Name" value="${user.name}">
+								<input type="text" name="name" class="form-control" id="name" placeholder="User Name"
+									value="${user.name}">
 							</div>
 							<div class="form-group">
 								<label for="address" class="control-label">주소:</label>
-								<input type="text" name="address" class="form-control" id="address" placeholder="address" value="${user.address}">
+								<input type="text" name="address" class="form-control" id="address"
+									placeholder="address" value="${user.address}">
 							</div>
 							<div class="form-group">
 								<label for="phone" class="control-label">전화번호:</label>
-								<input type="text" name="phone" class="form-control" id="phone" placeholder="010-xxxx-xxxx" value="${user.phone}">
+								<input type="text" name="phone" class="form-control" id="phone"
+									placeholder="010-xxxx-xxxx" value="${user.phone}">
 							</div>
 							<div class="form-group">
 								<label for="allergic" class="control-label">알레르기:</label>
@@ -172,10 +183,10 @@
 </body>
 
 <script>
-	if("${msg}"!=""){
+	if ("${msg}" != "") {
 		alert("${msg}");
 	}
-	$('#exampleModal').on('show.bs.modal', function(event) {
+	$('#exampleModal').on('show.bs.modal', function (event) {
 		var button = $(event.relatedTarget) // Button that triggered the modal
 		var recipient = button.data('whatever') // Extract info from data-* attributes
 		// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
@@ -186,161 +197,173 @@
 	})
 
 	$(document)
-			.ready(
-					function() {
-						$("#main_body").remove();
-						$("#main_page").append('<div id="main_body"> </div>');
-						$
-								.ajax({
-									url : "main.do",
-									success : function(data) {
-										$
-												.each(
-														data.list,
-														function(index, item) {
-															var img_src;
-															var name;
-															var marterial;
+		.ready(
+			function () {
+				$("#main_body").remove();
+				$("#main_page").append('<div id="main_body"> </div>');
+				$
+					.ajax({
+						url: "main.do",
+						success: function (data) {
+							$
+								.each(
+									data.list,
+									function (index, item) {
+										var img_src;
+										var name;
+										var marterial;
 
-															var tmp;
-															console.log(tmp);
-															name = item.name
-															marterial = item.material
-															img_src = item.img
-															$("#main_body")
-																	.append(
-																			'<table class="product_info" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr><td align="left" valign="top"><img width="200px" src=' + img_src + '></img></td><td class="product_contents" width="*" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td width="*" valign="top"><div class="ss_book_list"><ul><li><h1 class="product_name">'
-																					+ name
-																					+ '</h1><hr></li><li id="materials">'
-																					+ marterial
-																					+ '</li><li><button id="btn_add">추가</button><button id=btn_zzim>찜</button></li></ul></div></td></tr></tbody></table></td></tr></tbody></table>');
-														})
-									}
-								})
+										var tmp;
+										console.log(tmp);
+										name = item.name
+										marterial = item.material
+										img_src = item.img
+										$("#main_body")
+											.append(
+												'<table class="product_info" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr><td align="left" valign="top"><img width="200px" src=' +
+												img_src +
+												'></img></td><td class="product_contents" width="*" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td width="*" valign="top"><div class="ss_book_list"><ul><li><h1 class="product_name">' +
+												name +
+												'</h1><hr></li><li id="materials">' +
+												marterial +
+												'</li><li><button id="btn_add">추가</button><button id=btn_zzim>찜</button></li></ul></div></td></tr></tbody></table></td></tr></tbody></table>'
+												);
+									})
+						}
 					})
+			})
 
 	$("#b_search")
-			.on(
-					"click",
-					function() {
-						var condition = $("#condition").val();
-						var contents = $("#contents").val();
-						var tmp;
-						if (condition == "상품명") {
-							tmp = "name";
-						} else if (condition == "제조사") {
-							tmp = "maker";
-						} else {
-							tmp = "material"
+		.on(
+			"click",
+			function () {
+				var condition = $("#condition").val();
+				var contents = $("#contents").val();
+				var tmp;
+				if (condition == "상품명") {
+					tmp = "name";
+				} else if (condition == "제조사") {
+					tmp = "maker";
+				} else {
+					tmp = "material"
+				}
+
+				if (contents == "") {
+					contents = "*";
+				}
+
+				$("#main_body").remove();
+				$("#main_page").append('<div id="main_body"> </div>');
+				$
+					.ajax({
+
+						url: "search.do/" + tmp + "/" + contents,
+						success: function (data) {
+							$
+								.each(
+									data.list,
+									function (index, item) {
+										var img_src;
+										var name;
+										var marterial;
+
+										name = item.name
+										marterial = item.material
+										img_src = item.img
+										$("#main_body")
+											.append(
+												'<table class="product_info" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr><td align="left" valign="top"><img width="200px" src=' +
+												img_src +
+												'></img></td><td class="product_contents" width="*" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td width="*" valign="top"><div class="ss_book_list"><ul><li><h1 class="product_name">' +
+												name +
+												'</h1><hr></li><li id="materials">' +
+												marterial +
+												'</li><li><button id="btn_add">추가</button><button id=btn_zzim>찜</button></li></ul></div></td></tr></tbody></table></td></tr></tbody></table>'
+												);
+									})
 						}
-
-						if (contents == "") {
-							contents = "*";
-						}
-						
-						$("#main_body").remove();
-						$("#main_page").append('<div id="main_body"> </div>');
-						$
-								.ajax({
-
-									url : "search.do/" + tmp + "/" + contents,
-									success : function(data) {
-										$
-												.each(
-														data.list,
-														function(index, item) {
-															var img_src;
-															var name;
-															var marterial;
-
-															name = item.name
-															marterial = item.material
-															img_src = item.img
-															$("#main_body")
-																	.append(
-																			'<table class="product_info" border="0" cellspacing="0" cellpadding="0"> <tbody> <tr><td align="left" valign="top"><img width="200px" src=' + img_src + '></img></td><td class="product_contents" width="*" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td width="*" valign="top"><div class="ss_book_list"><ul><li><h1 class="product_name">'
-																					+ name
-																					+ '</h1><hr></li><li id="materials">'
-																					+ marterial
-																					+ '</li><li><button id="btn_add">추가</button><button id=btn_zzim>찜</button></li></ul></div></td></tr></tbody></table></td></tr></tbody></table>');
-														})
-									}
-								})
 					})
+			})
 
 	$("#btn_product_info")
-			.on(
-					"click",
-					function() {
-						$("#main_body").remove();
-						$("#main_page")
-								.append(
-										'<div id="main_body" style="display:grid; grid-template-columns: repeat(2, 1fr);" > </div>');
-						$
-								.ajax({
-									url : "foodlist.do",
-									success : function(data) {
-										console.log(data);
-										$.each(
-														data.list,
-														function(index, item) {
-															var img_src;
-															var name;
-															var marterial;
+		.on(
+			"click",
+			function () {
+				$("#main_body").remove();
+				$("#main_page")
+					.append(
+						'<div id="main_body" style="display:grid; grid-template-columns: repeat(2, 1fr);" > </div>');
+				$
+					.ajax({
+						url: "foodlist.do",
+						success: function (data) {
+							console.log(data);
+							$.each(
+								data.list,
+								function (index, item) {
+									var img_src;
+									var name;
+									var marterial;
 
-															name = item.name;
-															marterial = item.material;
-															img_src = item.img;
-															$("#main_body")
-																	.append(
-																			'<table class="product_info" border="0"  cellspacing="0" cellpadding="0"> <tbody> <tr><td align="left" valign="top"><img class="product_img" width="200px" src=' + img_src + '></img></td><td class="product_contents" width="*" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td width="*" valign="top"><div class="ss_book_list"><ul><li><h1 class="product_name">'
-																					+ name
-																					+ '</h1><hr></li><li id="materials">'
-																					+ marterial
-																					+ '</li><li><button id="btn_add">추가</button><button id=btn_zzim>찜</button></li></ul></div></td></tr></tbody></table></td></tr></tbody></table>');
-														})
-									}
+									name = item.name;
+									marterial = item.material;
+									img_src = item.img;
+									$("#main_body")
+										.append(
+											'<table class="product_info" border="0"  cellspacing="0" cellpadding="0"> <tbody> <tr><td align="left" valign="top"><img class="product_img" width="200px" src=' +
+											img_src +
+											'></img></td><td class="product_contents" width="*" align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td width="*" valign="top"><div class="ss_book_list"><ul><li><h1 class="product_name">' +
+											name +
+											'</h1><hr></li><li id="materials">' +
+											marterial +
+											'</li><li><button id="btn_add">추가</button><button id=btn_zzim>찜</button></li></ul></div></td></tr></tbody></table></td></tr></tbody></table>'
+											);
 								})
+						}
 					})
+			})
 
-	$(document).on("click", ".product_name", function(event) {
+	$(document).on("click", ".product_name", function (event) {
 		location.href = "foodInfo.jsp?foodName=" + $(this).text();
 	});
-	
-	$('input:checkbox[name="allergy"]').each(function() {
-	    if("${user.allergy}".includes(this.value)){
-	    	this.checked = true;
-	    }
+
+	$('input:checkbox[name="allergy"]').each(function () {
+		if ("${user.allergy}".includes(this.value)) {
+			this.checked = true;
+		}
 	});
-	
-	if(${user eq null}){
+
+	if ($ {
+			user eq null
+		}) {
 		$("#btn_user_info").css("visibility", "hidden");
 		$("#btn_signup").css("visibility", "visible");
 		$("#btn_logout").css("visibility", "hidden");
 		$("#btn_login").css("visibility", "visible");
-	}else{
+	} else {
 		$("#btn_user_info").css("visibility", "visible");
 		$("#btn_signup").css("visibility", "hidden");
 		$("#btn_logout").css("visibility", "visible");
-		$("#btn_login").css("visibility", "hidden");		
+		$("#btn_login").css("visibility", "hidden");
 	}
-	
-	$("#btn_signup").on("submit", function(event) {
+
+	$("#btn_signup").on("submit", function (event) {
 		event.preventDefault();
-	    var boxes = document.getElementsByClassName('checkbox');
-	    var checked = [];
-	    for(var i=0; boxes[i]; ++i){
-	      if(boxes[i].checked){
-	        checked.push(boxes[i].name);
-	      }
-	    }
-		
-	    var checkedStr = checked.join(',');
+		var boxes = document.getElementsByClassName('checkbox');
+		var checked = [];
+		for (var i = 0; boxes[i]; ++i) {
+			if (boxes[i].checked) {
+				checked.push(boxes[i].name);
+			}
+		}
 
-	    document.getElementById('checkbox_str').value = checkedStr;
-	    form.submit();
+		var checkedStr = checked.join(',');
 
-	    return false;
+		document.getElementById('checkbox_str').value = checkedStr;
+		form.submit();
+
+		return false;
 	});
 </script>
+
 </html>

@@ -27,50 +27,42 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="id" class="control-label">아이디:</label>
-            <input type="text" name="id" class="form-control" id="userid" value="${user.id}" />
+            <input type="text" name="id" class="form-control" v-model="signUpModel.id" />
           </div>
           <div class="form-group">
             <label for="password" class="control-label">비밀번호:</label>
             <input
               type="password"
               class="form-control"
-              id="userpw"
-              name="password"
+              v-model="signUpModel.password"
               placeholder="숫자 영어 포함 6글자 이상"
-              value="${user.password}"
             />
           </div>
           <div class="form-group">
             <label for="name" class="control-label">이름:</label>
             <input
               type="text"
-              name="name"
               class="form-control"
-              id="name"
               placeholder="User Name"
-              value="${user.name}"
+              v-model="signUpModel.name"
             />
           </div>
           <div class="form-group">
             <label for="address" class="control-label">주소:</label>
             <input
               type="text"
-              name="address"
               class="form-control"
-              id="address"
               placeholder="address"
-              value="${user.address}"
+              v-model="signUpModel.address"
             />
           </div>
           <div class="form-group">
             <label for="phone" class="control-label">전화번호:</label>
             <input
               type="text"
-              name="phone"
               class="form-control"
-              id="phone"
               placeholder="010-xxxx-xxxx"
-              value="${user.phone}"
+              v-model="signUpModel.phone_number"
             />
           </div>
           <div class="form-group">
@@ -107,7 +99,7 @@
         </div>
         <input type="hidden" name="checkboxStr" id="checkbox_str" />
         <div class="modal-footer">
-          <input type="submit" value="등록" class="btn btn-primary" id="btn_signup" />
+          <input type="button" value="등록" class="btn btn-primary" @click="signUp" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </b-modal>
@@ -174,10 +166,42 @@ export default {
       model: {
         id: "",
         password: ""
+      },
+      signUpModel: {
+        id: "",
+        password: "",
+        name: "",
+        address: "",
+        phone_number: "",
+        allergy: ""
       }
     };
   },
   methods: {
+    signUp() {
+      // 체크박스 하나로 묶었다..
+      let boxes = document.getElementsByClassName("checkbox");
+      let checked = [];
+      for (let i = 0; boxes[i]; ++i) {
+        if (boxes[i].checked) {
+          checked.push(boxes[i].name);
+        }
+      }
+      let checkedStr = checked.join(",");
+
+      this.signUpModel.allergy = checkedStr;
+
+      axios
+        .post("http://localhost:8080/user", this.signUpModel)
+        .then(response => {
+          /* eslint-disable no-console */
+          console.log("가입됐는데 확인해볼래?");
+          console.log(response);
+        })
+        .catch(() => {
+          console.log("가입 안됨");
+        });
+    },
     login() {
       axios
         .post("http://localhost:8080/login", this.model)

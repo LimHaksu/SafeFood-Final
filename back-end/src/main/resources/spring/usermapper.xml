@@ -8,11 +8,11 @@
 
 
 	<insert id="insertUser" parameterType="user">
-		insert into user (id, password, name, address, phone_number, allergy) values(#{id}, #{password}, #{name}, #{address}, #{phone}, #{allergy})
+		insert into user (id, password, name, address, phone_number, allergy) values(#{id}, #{password}, #{name}, #{address}, #{phone_number}, #{allergy})
 	</insert>
 	
 	<update id="updateUser" parameterType="user">
-		update user set password=#{password}, name=#{name}, address=#{address}, phone_number=#{phone}, allergy=#{allergy} where id=#{id}
+		update user set password=#{password}, name=#{name}, address=#{address}, phone_number=#{phone_number}, allergy=#{allergy} where id=#{id}
 	</update>
 
 	<delete id="deleteUser" parameterType="user">

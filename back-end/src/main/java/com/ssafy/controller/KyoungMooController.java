@@ -24,7 +24,7 @@ import com.ssafy.service.FoodService;
 import com.ssafy.service.UserService;
 import com.ssafy.util.HashUtil;
 
-@CrossOrigin(origins = { "*" }, maxAge = 6000)
+@CrossOrigin(origins = { "*" })
 @RestController
 public class KyoungMooController {
 

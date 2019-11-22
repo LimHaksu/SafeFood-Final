@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post {
-	Integer no;
-    String writer;
-    String title;
-    String contents;
-    String comments;
+    private Integer no;
+    private String writer;
+    private String title;
+    private String contents;
+    private String comments;
 }

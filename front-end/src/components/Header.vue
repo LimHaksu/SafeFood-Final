@@ -119,15 +119,15 @@
         <div class="modal-body">
           <div class="form-group">
             <label for="userid" class="control-label">아이디:</label>
-            <input type="text" class="form-control" id="userid" name="id" />
+            <input type="text" class="form-control" v-model="model.id" />
           </div>
           <div class="form-group">
             <label for="password" class="control-label">비밀번호:</label>
-            <input type="password" class="form-control" id="userpw" name="password" />
+            <input type="password" class="form-control" v-model="model.password" />
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-light" id="userLogin">로그인</button>
+          <button type="button" class="btn btn-light" id="userLogin" @click="login">로그인</button>
           <button type="button" class="btn btn-dark" id="userPwFind">비밀번호 찾기</button>
         </div>
       </form>
@@ -166,7 +166,30 @@
 
 
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      model: {
+        id: "",
+        password: ""
+      }
+    };
+  },
+  methods: {
+    login() {
+      axios
+        .post("http://localhost:8080/login", this.model)
+        //.get('./emp.json')
+        .then(response => {
+          /* eslint-disable no-console */
+          console.log(response);
+        })
+        .catch(() => {});
+    }
+  }
+};
 </script>
 <style>
 </style>

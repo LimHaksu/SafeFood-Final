@@ -67,33 +67,33 @@
           </div>
           <div class="form-group">
             <label for="allergic" class="control-label">알레르기:</label>
-            <input type="checkbox" name="allergy" value="대두" />
+            <input type="checkbox" name="allergy" value="대두" v-model="checked"/>
             대두
-            <input type="checkbox" name="allergy" value="땅콩" />
+            <input type="checkbox" name="allergy" value="땅콩" v-model="checked"/>
             땅콩
-            <input type="checkbox" name="allergy" value="우유" />
+            <input type="checkbox" name="allergy" value="우유" v-model="checked"/>
             우유
-            <input type="checkbox" name="allergy" value="게" />
+            <input type="checkbox" name="allergy" value="게" v-model="checked"/>
             게
-            <input type="checkbox" name="allergy" value="새우" />
+            <input type="checkbox" name="allergy" value="새우" v-model="checked"/>
             새우
-            <input type="checkbox" name="allergy" value="참치" />
+            <input type="checkbox" name="allergy" value="참치" v-model="checked"/>
             참치
-            <input type="checkbox" name="allergy" value="연어" />
+            <input type="checkbox" name="allergy" value="연어" v-model="checked"/>
             연어
-            <input type="checkbox" name="allergy" value="쑥" />
+            <input type="checkbox" name="allergy" value="쑥" v-model="checked"/>
             쑥
-            <input type="checkbox" name="allergy" value="소고기" />
+            <input type="checkbox" name="allergy" value="소고기" v-model="checked"/>
             소고기
-            <input type="checkbox" name="allergy" value="닭고기" />
+            <input type="checkbox" name="allergy" value="닭고기" v-model="checked"/>
             닭고기
-            <input type="checkbox" name="allergy" value="돼지고기" />
+            <input type="checkbox" name="allergy" value="돼지고기" v-model="checked"/>
             돼지고기
-            <input type="checkbox" name="allergy" value="복숭아" />
+            <input type="checkbox" name="allergy" value="복숭아" v-model="checked"/>
             복숭아
-            <input type="checkbox" name="allergy" value="민들레" />
+            <input type="checkbox" name="allergy" value="민들레" v-model="checked"/>
             민들레
-            <input type="checkbox" name="allergy" value="계란흰자" />
+            <input type="checkbox" name="allergy" value="계란흰자" v-model="checked"/>
             계란흰자
           </div>
         </div>
@@ -174,27 +174,20 @@ export default {
         address: "",
         phone_number: "",
         allergy: ""
-      }
+      },
+      checked: []
     };
   },
   methods: {
+      /* eslint-disable no-console */ 
     signUp() {
-      // 체크박스 하나로 묶었다..
-      let boxes = document.getElementsByClassName("checkbox");
-      let checked = [];
-      for (let i = 0; boxes[i]; ++i) {
-        if (boxes[i].checked) {
-          checked.push(boxes[i].name);
-        }
-      }
-      let checkedStr = checked.join(",");
-
+      let checkedStr = this.checked.join(",");
+      console.log("체크 ",checkedStr);
       this.signUpModel.allergy = checkedStr;
-
+      console.log(this.signUpModel);
       axios
         .post("http://localhost:8080/user", this.signUpModel)
         .then(response => {
-          /* eslint-disable no-console */
           console.log("가입됐는데 확인해볼래?");
           console.log(response);
         })

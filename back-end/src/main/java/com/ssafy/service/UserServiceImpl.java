@@ -1,11 +1,10 @@
 package com.ssafy.service;
 
+import com.ssafy.dao.UserDao;
+import com.ssafy.dto.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ssafy.dao.UserDao;
-import com.ssafy.dao.UserDaoImpl;
-import com.ssafy.dto.User;
 
 @Service
 public class UserServiceImpl implements UserService{

@@ -134,6 +134,7 @@
 					<li class="nav-item"><a href="#" class="nav-link">내 섭취 정보</a></li>
 					<li class="nav-item"><a href="#" class="nav-link">예상 섭취 정보</a></li>
 					<li class="nav-item"><a href="#" class="nav-link">검색</a></li>
+					<li class="nav-item"><a href="#" class="nav-link">Q&A</a></li>
 				</ul>
 			</div>
 		</nav>

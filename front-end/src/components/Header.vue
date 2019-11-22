@@ -1,101 +1,84 @@
-<template>
+<template v-slot:modal-footer="{ ok, cancel, hide }">
   <header>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-      <b-button v-b-modal.modal-1>Sign up</b-button>
-      <b-button v-b-modal.modal-login>Login</b-button>
-      <button
-        type="button"
-        class="btn btn-secondary"
-        id="btn_logout"
-        onClick="location.href='logout.do'"
-      >Logout</button>
-      <button
-        type="button"
-        class="btn btn-secondary"
-        id="btn_user_info"
-        onClick="location.href='userInfo.jsp'"
-      >회원정보</button>
+      <b-button id="nav_btn" v-b-modal.modal-1 v-if="!authenticated">Sign up</b-button>
+      <b-button id="nav_btn" v-b-modal.modal-login v-if="!authenticated">Login</b-button>
+      <b-button id="nav_btn" @click="logout" v-if="authenticated">Logout</b-button>
+      <b-button id="nav_btn" v-if="authenticated">회원정보</b-button>
     </nav>
     <form action="insert.do" method="post">
-      <b-modal b-modal id="modal-1" hide-footer>
-        <h4 class="modal-title" id="singInlLabel">회원가입</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <b-modal b-modal id="modal-1" hide-footer title="회원가입">
         <!-- </div> -->
-
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="id" class="control-label">아이디:</label>
-            <input type="text" name="id" class="form-control" v-model="signUpModel.id" />
-          </div>
-          <div class="form-group">
-            <label for="password" class="control-label">비밀번호:</label>
-            <input
-              type="password"
-              class="form-control"
-              v-model="signUpModel.password"
-              placeholder="숫자 영어 포함 6글자 이상"
-            />
-          </div>
-          <div class="form-group">
-            <label for="name" class="control-label">이름:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="User Name"
-              v-model="signUpModel.name"
-            />
-          </div>
-          <div class="form-group">
-            <label for="address" class="control-label">주소:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="address"
-              v-model="signUpModel.address"
-            />
-          </div>
-          <div class="form-group">
-            <label for="phone" class="control-label">전화번호:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="010-xxxx-xxxx"
-              v-model="signUpModel.phone_number"
-            />
-          </div>
-          <div class="form-group">
-            <label for="allergic" class="control-label">알레르기:</label>
-            <input type="checkbox" name="allergy" value="대두" v-model="checked"/>
-            대두
-            <input type="checkbox" name="allergy" value="땅콩" v-model="checked"/>
-            땅콩
-            <input type="checkbox" name="allergy" value="우유" v-model="checked"/>
-            우유
-            <input type="checkbox" name="allergy" value="게" v-model="checked"/>
-            게
-            <input type="checkbox" name="allergy" value="새우" v-model="checked"/>
-            새우
-            <input type="checkbox" name="allergy" value="참치" v-model="checked"/>
-            참치
-            <input type="checkbox" name="allergy" value="연어" v-model="checked"/>
-            연어
-            <input type="checkbox" name="allergy" value="쑥" v-model="checked"/>
-            쑥
-            <input type="checkbox" name="allergy" value="소고기" v-model="checked"/>
-            소고기
-            <input type="checkbox" name="allergy" value="닭고기" v-model="checked"/>
-            닭고기
-            <input type="checkbox" name="allergy" value="돼지고기" v-model="checked"/>
-            돼지고기
-            <input type="checkbox" name="allergy" value="복숭아" v-model="checked"/>
-            복숭아
-            <input type="checkbox" name="allergy" value="민들레" v-model="checked"/>
-            민들레
-            <input type="checkbox" name="allergy" value="계란흰자" v-model="checked"/>
-            계란흰자
-          </div>
+        <div class="form-group">
+          <label for="id" class="control-label">아이디:</label>
+          <input type="text" name="id" class="form-control" v-model="signUpModel.id" />
+        </div>
+        <div class="form-group">
+          <label for="password" class="control-label">비밀번호:</label>
+          <input
+            type="password"
+            class="form-control"
+            v-model="signUpModel.password"
+            placeholder="숫자 영어 포함 6글자 이상"
+          />
+        </div>
+        <div class="form-group">
+          <label for="name" class="control-label">이름:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="User Name"
+            v-model="signUpModel.name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="address" class="control-label">주소:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="address"
+            v-model="signUpModel.address"
+          />
+        </div>
+        <div class="form-group">
+          <label for="phone" class="control-label">전화번호:</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="010-xxxx-xxxx"
+            v-model="signUpModel.phone_number"
+          />
+        </div>
+        <div class="form-group">
+          <label for="allergic" class="control-label">알레르기:</label>
+          <input type="checkbox" name="allergy" value="대두" v-model="checked" />
+          대두
+          <input type="checkbox" name="allergy" value="땅콩" v-model="checked" />
+          땅콩
+          <input type="checkbox" name="allergy" value="우유" v-model="checked" />
+          우유
+          <input type="checkbox" name="allergy" value="게" v-model="checked" />
+          게
+          <input type="checkbox" name="allergy" value="새우" v-model="checked" />
+          새우
+          <input type="checkbox" name="allergy" value="참치" v-model="checked" />
+          참치
+          <input type="checkbox" name="allergy" value="연어" v-model="checked" />
+          연어
+          <input type="checkbox" name="allergy" value="쑥" v-model="checked" />
+          쑥
+          <input type="checkbox" name="allergy" value="소고기" v-model="checked" />
+          소고기
+          <input type="checkbox" name="allergy" value="닭고기" v-model="checked" />
+          닭고기
+          <input type="checkbox" name="allergy" value="돼지고기" v-model="checked" />
+          돼지고기
+          <input type="checkbox" name="allergy" value="복숭아" v-model="checked" />
+          복숭아
+          <input type="checkbox" name="allergy" value="민들레" v-model="checked" />
+          민들레
+          <input type="checkbox" name="allergy" value="계란흰자" v-model="checked" />
+          계란흰자
         </div>
         <input type="hidden" name="checkboxStr" id="checkbox_str" />
         <div class="modal-footer">
@@ -105,8 +88,7 @@
       </b-modal>
     </form>
 
-    <b-modal b-modal id="modal-login" hide-footer>
-      <h4 class="modal-title" id="LoginLabel">로그인</h4>
+    <b-modal b-modal id="modal-login" ref="ref-modal-login" title="로그인">
       <form method="post" action="login.do" id="layout_login">
         <div class="modal-body">
           <div class="form-group">
@@ -118,11 +100,18 @@
             <input type="password" class="form-control" v-model="model.password" />
           </div>
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <button type="button" class="btn btn-light" id="userLogin" @click="login">로그인</button>
           <button type="button" class="btn btn-dark" id="userPwFind">비밀번호 찾기</button>
-        </div>
+        </div>-->
+        <!-- Emulate built in modal footer ok and cancel button actions -->
+        <!-- Button with custom close trigger value -->
       </form>
+      <template v-slot:modal-footer="{ok,cancel}">
+        <b-button variant="danger" @click="cancel()">Cancel</b-button>
+        <b-button variant="outline-secondary" id="userPwFind">비밀번호 찾기</b-button>
+        <b-button variant="success" id="userLogin" @click="login">로그인</b-button>
+      </template>
     </b-modal>
 
     <nav class="navbar navbar-expand-sm navbar-white bg-white">
@@ -175,14 +164,16 @@ export default {
         phone_number: "",
         allergy: ""
       },
-      checked: []
+      checked: [],
+      authenticated: false
     };
   },
   methods: {
-      /* eslint-disable no-console */ 
+    /* eslint-disable no-console */
+
     signUp() {
       let checkedStr = this.checked.join(",");
-      console.log("체크 ",checkedStr);
+      console.log("체크 ", checkedStr);
       this.signUpModel.allergy = checkedStr;
       console.log(this.signUpModel);
       axios
@@ -204,13 +195,22 @@ export default {
           //   console.log(response);
           this.$session.flash.set("user", response.data);
           console.log(this.$session.flash.get("user"));
+          this.authenticated = true;
+          this.$refs["ref-modal-login"].hide();
         })
         .catch(() => {
           alert("아이디 혹은 비밀번호가 틀렸어");
         });
+    },
+    logout() {
+      this.$session.flash.remove("user");
+      this.authenticated = false;
     }
   }
 };
 </script>
 <style>
+#nav_btn {
+  margin-right: 0.3em;
+}
 </style>

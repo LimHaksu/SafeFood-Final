@@ -184,9 +184,13 @@ export default {
         //.get('./emp.json')
         .then(response => {
           /* eslint-disable no-console */
-          console.log(response);
+          //   console.log(response);
+          this.$session.flash.set("user", response.data);
+          console.log(this.$session.flash.get("user"));
         })
-        .catch(() => {});
+        .catch(() => {
+          alert("아이디 혹은 비밀번호가 틀렸어");
+        });
     }
   }
 };

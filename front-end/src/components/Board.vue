@@ -15,6 +15,7 @@
           <tr v-for="post in posts" v-bind:key="post.no">
             <td>{{post.no}}</td>
             <td>
+              <!-- TODO: 페이지 이동을 router를 이용하게 하자 -->
               <a :href="'http://localhost:8080/qna_post.jsp?no='+post.no">{{post.title}}</a>
             </td>
             <td>{{post.writer}}</td>

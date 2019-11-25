@@ -5,6 +5,7 @@
     </div>
     <router-view></router-view>
     <div id="footer">
+      <BoardWrite />
       <!-- footer가 들어갈 자리 -->
     </div>
   </div>
@@ -16,14 +17,14 @@
 <script>
 import Header from "./components/Header.vue";
 // import Board from "./components/Board.vue";
-// import BoardWrite from "./components/BoardWrite.vue";
+import BoardWrite from "./components/BoardWrite.vue";
 
 export default {
   name: "app",
   components: {
-    Header
+    Header,
     // Board
-    // BoardWrite
+    BoardWrite
   }
 };
 </script>

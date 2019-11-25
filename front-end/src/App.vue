@@ -1,5 +1,13 @@
 <template>
-  <Header />
+  <div id="app">
+    <div id="header">
+      <Header />
+    </div>
+    <router-view></router-view>
+    <div id="footer">
+      <!-- footer가 들어갈 자리 -->
+    </div>
+  </div>
   <!-- 
     <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Welcome to Your Vue.js App" />-->
@@ -25,6 +33,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

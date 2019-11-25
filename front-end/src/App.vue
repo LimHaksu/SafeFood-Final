@@ -5,7 +5,6 @@
     </div>
     <router-view></router-view>
     <div id="footer">
-      <!-- footer가 들어갈 자리 -->
       <Footer />
     </div>
   </div>

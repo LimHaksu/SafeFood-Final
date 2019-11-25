@@ -37,7 +37,7 @@ public class KyoungMooController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("foodlist.do")
+	@GetMapping("foodlist")
 	public Map<String, Object> getFoods() {
 		List<Food> list = null;
 
@@ -47,7 +47,7 @@ public class KyoungMooController {
 		return map;
 	}
 
-	@GetMapping("search.do/{key}/{word}")
+	@GetMapping("foodlist/{key}/{word}")
 	public Map<String, Object> Eldyd(@PathVariable String key, @PathVariable String word) {
 		List<Food> list = null;
 		if (word.equals("*")) {

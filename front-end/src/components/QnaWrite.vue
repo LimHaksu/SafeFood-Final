@@ -44,6 +44,8 @@ export default {
     };
   },
   methods: {
+    /* eslint-disable no-console */
+
     write: function() {
       console.log(this.post);
       axios

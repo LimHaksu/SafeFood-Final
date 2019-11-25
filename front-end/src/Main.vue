@@ -1,19 +1,23 @@
 <template>
-  <Header />
+  <!-- <Header /> -->
+  <!-- <board /> -->
+  <BoardWrite />
   <!-- 
     <img alt="Vue logo" src="./assets/logo.png" />
   <HelloWorld msg="Welcome to Your Vue.js App" />-->
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld.vue";
-import Header from "./components/Header.vue";
+// import Header from "./components/Header.vue";
+// import Board from "./components/Board.vue";
+import BoardWrite from "./components/BoardWrite.vue";
 
 export default {
   name: "app",
   components: {
-    Header
-    // HelloWorld
+    // Header
+    // Board
+    BoardWrite
   }
 };
 </script>

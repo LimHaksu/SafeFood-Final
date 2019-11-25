@@ -6,8 +6,8 @@
       <b-button id="nav_btn" @click="logout" v-if="authenticated">Logout</b-button>
       <b-button id="nav_btn" v-if="authenticated">회원정보</b-button>
     </nav>
-    <form action="insert.do" method="post">
-      <b-modal b-modal id="modal-1" hide-footer title="회원가입">
+    <b-modal id="modal-1" ref="ref-modal-signup" title="회원가입">
+      <form action="insert.do" method="post">
         <!-- </div> -->
         <div class="form-group">
           <label for="id" class="control-label">아이디:</label>
@@ -81,14 +81,18 @@
           계란흰자
         </div>
         <input type="hidden" name="checkboxStr" id="checkbox_str" />
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
           <input type="button" value="등록" class="btn btn-primary" @click="signUp" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </b-modal>
-    </form>
+        </div>-->
+      </form>
+      <template v-slot:modal-footer="{ok,cancel}">
+        <b-button variant="danger" @click="cancel()">Close</b-button>
+        <b-button variant="success" @click="signUp">등록</b-button>
+      </template>
+    </b-modal>
 
-    <b-modal b-modal id="modal-login" ref="ref-modal-login" title="로그인">
+    <b-modal id="modal-login" ref="ref-modal-login" title="로그인">
       <form method="post" action="login.do" id="layout_login">
         <div class="modal-body">
           <div class="form-group">
@@ -181,6 +185,7 @@ export default {
         .then(response => {
           console.log("가입됐는데 확인해볼래?");
           console.log(response);
+          this.$refs["ref-modal-signup"].hide();
         })
         .catch(() => {
           console.log("가입 안됨");

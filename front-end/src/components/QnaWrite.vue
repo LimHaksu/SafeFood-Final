@@ -34,8 +34,8 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -49,9 +49,11 @@ export default {
     write: function() {
       console.log(this.post);
       axios
-        .post("./board/", this.post)
+        .post("http://localhost:8080/board/", this.post)
         .then(response => {
+          response;
           console.log(this.post);
+          console.log(this.$session.flash.get("user"));
         })
         .catch(error => {
           console.log(error);

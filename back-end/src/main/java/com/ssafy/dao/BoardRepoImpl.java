@@ -13,14 +13,14 @@ public class BoardRepoImpl implements BoardRepo {
 
 	@Autowired
 	SqlSession session;
-	
+
 	final String statement = "sql.board.rest.";
-	
+
 	@Override
 	public List<Post> select() {
 		return session.selectList(statement + "select");
 	}
-	
+
 	@Override
 	public Post select(String item) {
 		return session.selectOne(statement + "select", item);
@@ -40,5 +40,4 @@ public class BoardRepoImpl implements BoardRepo {
 	public int delete(String no) {
 		return session.delete(statement + "delete", no);
 	}
-	
 }

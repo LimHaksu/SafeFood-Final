@@ -34,7 +34,9 @@
                 <div class="ss_book_list">
                   <ul>
                     <li>
-                      <h1>{{food.name}}</h1>
+                      <h1>
+                        <a :href="'./food_info?foodCode='+food.code">{{food.name}}</a>
+                      </h1>
                       <hr />
                     </li>
                     <li>{{food.material}}</li>
@@ -55,7 +57,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {

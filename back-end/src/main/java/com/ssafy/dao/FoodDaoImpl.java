@@ -2,15 +2,13 @@ package com.ssafy.dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import com.ssafy.dto.Food;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.ssafy.dto.Food;
 
 @Repository
 public class FoodDaoImpl implements FoodDao {
@@ -19,7 +17,7 @@ public class FoodDaoImpl implements FoodDao {
 
 	@Autowired
 	SqlSession session;
-	
+
 	@Override
 	public Food search(int code) {
 		return session.selectOne(ns + "search", code);
@@ -28,18 +26,17 @@ public class FoodDaoImpl implements FoodDao {
 	@Override
 	public List<Food> searchAll(String key, String word) {
 		System.out.println("들어옴");
-		Map<String, String> map = new HashMap<>();
 		List<Food> list = new ArrayList<Food>();
-		if(word.equals("")) {
-			list =  session.selectList(ns + "searchAll");
+		if (word.equals("")) {
+			list = session.selectList(ns + "searchAll");
 			return list;
 		}
-		String parameter = "%" +  word + "%";
-		if(key.equals("name")) {
+		String parameter = "%" + word + "%";
+		if (key.equals("name")) {
 			list = session.selectList(ns + "searchAllName", parameter);
-		}else if(key.equals("maker")) {
+		} else if (key.equals("maker")) {
 			list = session.selectList(ns + "searchAllMaker", parameter);
-		}else if(key.equals("material")) {
+		} else if (key.equals("material")) {
 			list = session.selectList(ns + "searchAllMaterial", parameter);
 		}
 		return list;

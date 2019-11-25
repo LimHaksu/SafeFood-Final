@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class User {
-	 String id;
-	 String password;
-	 String name;
-	 String address;
-	 String phone_number;
-	 String allergy;
+	String id;
+	String password;
+	String name;
+	String address;
+	String phone_number;
+	String allergy;
 }

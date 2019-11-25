@@ -122,6 +122,9 @@
       <div class="collapse navbar-collapse" id="info">
         <ul class="navbar-nav">
           <li class="nav-item">
+            <a href="./" class="nav-link">메인</a>
+          </li>
+          <li class="nav-item">
             <a href="#" class="nav-link">공지사항</a>
           </li>
           <li class="nav-item" id="btn_product_info">
@@ -170,6 +173,9 @@ export default {
       authenticated: false
     };
   },
+  mounted() {
+    this.authenticated = this.$store.state.isAuth;
+  },
   methods: {
     /* eslint-disable no-console */
 
@@ -195,10 +201,9 @@ export default {
         //.get('./emp.json')
         .then(response => {
           /* eslint-disable no-console */
-          //   console.log(response);
-          this.$session.flash.set("user", response.data);
-          console.log(this.$session.flash.get("user"));
-          this.authenticated = true;
+          console.log(response);
+          this.$store.commit("LOGIN");
+          this.authenticated = this.$store.state.isAuth;
           this.$refs["ref-modal-login"].hide();
         })
         .catch(() => {
@@ -206,8 +211,8 @@ export default {
         });
     },
     logout() {
-      this.$session.flash.remove("user");
-      this.authenticated = false;
+      this.$store.commit("LOGOUT");
+      this.authenticated = this.$store.state.isAuth;
     }
   }
 };

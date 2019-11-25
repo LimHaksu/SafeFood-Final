@@ -14,6 +14,7 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import Header from "./components/Header.vue";
 // import Board from "./components/Board.vue";
 // import BoardWrite from "./components/BoardWrite.vue";
@@ -36,8 +37,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  /* color: #2c3e50; */
-  color: white;
-  background-color: #525864;
+  color: #2c3e50;
 }
 </style>

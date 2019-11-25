@@ -50,7 +50,10 @@
   </div>
 </template>
 <script>
+/* eslint-disable no-console */
 import axios from "axios";
+// import Vue from "vue";
+// Vue.prototype.EventBus = new Vue();
 var Request = function() {
   this.getParameter = function(name) {
     var rtnval = "";
@@ -83,12 +86,6 @@ export default {
     };
   },
   methods: {
-    show_detail: function(employeeid) {
-      alert(employeeid + "상세보기");
-      App.empid = employeeid;
-      App.currentview = "detailhrm";
-      App.showlist(4);
-    },
     writePost: function() {
       if (this.post.contents == "") {
         alert("내용이 없습니다");
@@ -142,7 +139,8 @@ export default {
     deletePost() {
       axios
         .delete("http://localhost:8080/board/" + this.post.no)
-        .then(respone => {
+        .then(response => {
+          response;
           console.log("삭제됐당");
           window.location.href = "./qna";
         })
@@ -154,7 +152,8 @@ export default {
       this.post.comments = null;
       axios
         .put("http://localhost:8080/board/", this.post)
-        .then(respone => {
+        .then(response => {
+          response;
           console.log("코멘트는 삭제될까..?");
         })
         .catch(() => {

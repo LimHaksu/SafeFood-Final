@@ -16,6 +16,7 @@
           <td>
             <!-- TODO: 페이지 이동을 router를 이용하게 하자 -->
             <a :href="'./qna_post?no='+post.no">{{post.title}}</a>
+            <!-- <a @click="getPost(post.title)">{{post.title}}</a> -->
           </td>
           <td>{{post.writer}}</td>
         </tr>
@@ -28,7 +29,10 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import axios from "axios";
+// import Vue from "vue";
+// Vue.prototype.EventBus = new Vue();
 export default {
   data() {
     return {
@@ -47,6 +51,12 @@ export default {
         this.errored = true;
       });
   }
+  // methods: {
+  //   getPost(title) {
+  //     this.EventBus.$emit("paramValue", title);
+  //     location.href = "./qna_post";
+  //   }
+  // }
 };
 </script>
 <style>

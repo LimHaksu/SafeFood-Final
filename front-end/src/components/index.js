@@ -4,6 +4,7 @@ import Main from './Main.vue'
 import Qna from './Qna.vue'
 import QnaWrite from './QnaWrite.vue'
 import QnaPost from './QnaPost.vue'
+import FoodInfo from './FoodInfo.vue'
 Vue.use(Router)
 export default new Router({
     mode: "history",
@@ -22,6 +23,10 @@ export default new Router({
         {
             path: '/qna_post',
             component: QnaPost
+        },
+        {
+            path: '/food_info',
+            component: FoodInfo
         }
     ]
 })

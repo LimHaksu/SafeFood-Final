@@ -60,6 +60,14 @@ public class KyoungMooController {
 		return map;
 	}
 
+	@GetMapping("food/{code}")
+	public Map<String, Object> getFood(@PathVariable int code) {
+		Food food = foodService.search(code);
+		Map<String, Object> map = new HashMap<>();
+		map.put("food", food);
+		return map;
+	}
+
 	/***************************************************************************************/
 
 	@GetMapping("/board")

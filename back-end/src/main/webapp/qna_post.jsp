@@ -157,12 +157,6 @@
             };
         },
         methods: {
-            show_detail: function (employeeid) {
-                alert(employeeid + "상세보기");
-                App.empid = employeeid;
-                App.currentview = "detailhrm";
-                App.showlist(4);
-            },
             writePost: function () {
                 if (this.post.contents == "") {
                     alert("내용이 없습니다");

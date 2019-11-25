@@ -11,7 +11,7 @@
       </div>
       <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="padding: 20px;">
         <div>
-          <select name="country_id" tabindex="1" v-model="condition">
+          <select name="country_id" v-model="condition">
             <option value="name">상품명</option>
             <option value="maker">제조사</option>
             <option value="material">영양정보</option>
@@ -59,7 +59,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      condition: "",
+      condition: "name",
       contents: "",
       foodList: []
     };
@@ -92,4 +92,10 @@ export default {
     }
   }
 };
+
+/* TODO: 얘는 router 이용해서 페이지 이동할꺼에연
+$(document).on("click", ".product_name", function(event) {
+  location.href = "foodInfo.jsp?foodName=" + $(this).text();
+});
+*/
 </script>

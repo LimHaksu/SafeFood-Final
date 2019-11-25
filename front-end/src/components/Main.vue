@@ -22,7 +22,16 @@
   </article>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      img_src,
+      name,
+      material
+    };
+  },
+  methods: {}
+};
 // $(document).ready(function() {
 //   $("#main_body").remove();
 //   $("#main_page").append('<div id="main_body"> </div>');

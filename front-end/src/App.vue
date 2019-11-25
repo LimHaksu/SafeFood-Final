@@ -5,8 +5,8 @@
     </div>
     <router-view></router-view>
     <div id="footer">
-      <BoardWrite />
       <!-- footer가 들어갈 자리 -->
+      <Footer />
     </div>
   </div>
   <!-- 
@@ -18,13 +18,15 @@
 import Header from "./components/Header.vue";
 // import Board from "./components/Board.vue";
 import BoardWrite from "./components/BoardWrite.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
   name: "app",
   components: {
     Header,
     // Board
-    BoardWrite
+    BoardWrite,
+    Footer
   }
 };
 </script>

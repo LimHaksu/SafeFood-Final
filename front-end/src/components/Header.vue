@@ -4,7 +4,7 @@
       <b-button id="nav_btn" v-b-modal.modal-1 v-if="!authenticated">Sign up</b-button>
       <b-button id="nav_btn" v-b-modal.modal-login v-if="!authenticated">Login</b-button>
       <b-button id="nav_btn" @click="logout" v-if="authenticated">Logout</b-button>
-      <b-button id="nav_btn" v-if="authenticated">회원정보</b-button>
+      <b-button id="nav_btn" href="./user_info" v-if="authenticated">회원정보</b-button>
     </nav>
     <b-modal id="modal-1" ref="ref-modal-signup" title="회원가입">
       <form action="insert.do" method="post">
@@ -153,7 +153,7 @@
 
 <script>
 import axios from "axios";
-
+/* eslint-disable no-console */
 export default {
   data() {
     return {
@@ -174,7 +174,11 @@ export default {
     };
   },
   mounted() {
-    this.authenticated = this.$store.state.isAuth;
+    if (this.$store.getters.user != null) {
+      this.authenticated = true;
+    } else {
+      this.authenticated = false;
+    }
   },
   methods: {
     /* eslint-disable no-console */
@@ -201,9 +205,9 @@ export default {
         //.get('./emp.json')
         .then(response => {
           /* eslint-disable no-console */
-          console.log(response);
-          this.$store.commit("LOGIN");
-          this.authenticated = this.$store.state.isAuth;
+          console.log(response.data);
+          this.$store.commit("login", response.data);
+          this.authenticated = true;
           this.$refs["ref-modal-login"].hide();
         })
         .catch(() => {
@@ -211,8 +215,9 @@ export default {
         });
     },
     logout() {
-      this.$store.commit("LOGOUT");
-      this.authenticated = this.$store.state.isAuth;
+      this.$store.commit("logout");
+      this.authenticated = false;
+      location.href = "./";
     }
   }
 };

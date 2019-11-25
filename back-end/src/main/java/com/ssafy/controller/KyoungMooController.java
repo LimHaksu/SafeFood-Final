@@ -159,7 +159,7 @@ public class KyoungMooController {
 
 	// update.do -> user
 	@PutMapping("/user")
-	public ResponseEntity<Object> update(User user) {
+	public ResponseEntity<Object> update(@RequestBody User user) {
 		// 1. parameter 검증
 		String hashPass = String.valueOf(HashUtil.hash(user.getPassword()));
 
@@ -172,8 +172,8 @@ public class KyoungMooController {
 	}
 
 	// delete.do -> user
-	@DeleteMapping("user")
-	public ResponseEntity<Object> doDelete(String userid) {
+	@DeleteMapping("user/{userid}")
+	public ResponseEntity<Object> doDelete(@PathVariable String userid) {
 		User user = userService.findUser(userid);
 		userService.deleteUser(user);
 

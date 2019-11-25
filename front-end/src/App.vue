@@ -16,15 +16,15 @@
 <script>
 import Header from "./components/Header.vue";
 // import Board from "./components/Board.vue";
-import BoardWrite from "./components/BoardWrite.vue";
+// import BoardWrite from "./components/BoardWrite.vue";
 import Footer from "./components/Footer.vue";
 
 export default {
   name: "app",
   components: {
     Header,
-    // Board
-    BoardWrite,
+    // Board,
+    // BoardWrite,
     Footer
   }
 };

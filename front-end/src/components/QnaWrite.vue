@@ -47,7 +47,7 @@ export default {
     write: function() {
       console.log(this.post);
       axios
-        .post("http://localhost:8080/board/", this.post)
+        .post("./board/", this.post)
         .then(response => {
           console.log(this.post);
         })
@@ -57,7 +57,7 @@ export default {
         })
         .finally(() => {
           /* TODO: router 이용해서 화면 이동하는 것으로 바꾸자 */
-          window.location.href = "http://localhost:8080/qna.jsp";
+          window.location.href = "./qna";
         });
     }
   }

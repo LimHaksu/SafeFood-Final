@@ -25,9 +25,9 @@
 export default {
   data() {
     return {
-      img_src,
-      name,
-      material
+      //   img_src,
+      //   name,
+      //   material
     };
   },
   methods: {}

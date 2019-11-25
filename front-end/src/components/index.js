@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Main from './Main.vue'
-import Board from './Board.vue'
+import Qna from './Qna.vue'
+import QnaWrite from './QnaWrite.vue'
+import QnaPost from './QnaPost.vue'
 Vue.use(Router)
 export default new Router({
     mode: "history",
@@ -11,7 +13,15 @@ export default new Router({
         },
         {
             path: '/qna',
-            component: Board
+            component: Qna
+        },
+        {
+            path: '/qna_write',
+            component: QnaWrite
+        },
+        {
+            path: '/qna_post',
+            component: QnaPost
         }
     ]
 })

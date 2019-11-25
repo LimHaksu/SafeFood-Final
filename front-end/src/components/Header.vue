@@ -140,7 +140,7 @@
             <a href="#" class="nav-link">검색</a>
           </li>
           <li class="nav-item">
-            <a href="qna" class="nav-link">Q&A</a>
+            <a href="./qna" class="nav-link">Q&A</a>
           </li>
         </ul>
       </div>

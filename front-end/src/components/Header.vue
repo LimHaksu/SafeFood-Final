@@ -124,24 +124,27 @@
           <li class="nav-item">
             <a href="./" class="nav-link">메인</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">공지사항</a>
           </li>
           <li class="nav-item" id="btn_product_info">
             <a href="#" class="nav-link">상품정보</a>
-          </li>
-          <li class="nav-item">
+          </li>-->
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">베스트 섭취 정보</a>
+          </li>-->
+          <li class="nav-item" v-if="authenticated">
+            <a href="./my_intake" class="nav-link">내 섭취 정보</a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">내 섭취 정보</a>
+          <li class="nav-item" v-if="authenticated">
+            <a href="./my_friends" class="nav-link">내 친구</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">예상 섭취 정보</a>
-          </li>
-          <li class="nav-item">
+          </li>-->
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">검색</a>
-          </li>
+          </li>-->
           <li class="nav-item">
             <a href="./qna" class="nav-link">Q&A</a>
           </li>
@@ -208,7 +211,8 @@ export default {
           console.log(response.data);
           this.$store.commit("login", response.data);
           this.authenticated = true;
-          this.$refs["ref-modal-login"].hide();
+          //this.$refs["ref-modal-login"].hide();
+          location.href = "./";
         })
         .catch(() => {
           alert("아이디 혹은 비밀번호가 틀렸어");

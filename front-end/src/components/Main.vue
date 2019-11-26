@@ -41,8 +41,8 @@
                     </li>
                     <li>{{food.material}}</li>
                     <li>
-                      <button id="btn_add">추가</button>
-                      <button id="btn_zzim">찜</button>
+                      <button v-show="authenticated" id="btn_add" class="btn btn-primary btn-sm">추가</button>
+                      <button v-show="authenticated" id="btn_zzim" class="btn btn-primary btn-sm">찜</button>
                     </li>
                   </ul>
                 </div>
@@ -60,10 +60,18 @@ import axios from "axios";
 export default {
   data() {
     return {
+      authenticated: false,
       condition: "name",
       contents: "",
       foodList: []
     };
+  },
+  mounted() {
+    if (this.$store.getters.user != null) {
+      this.authenticated = true;
+    } else {
+      this.authenticated = false;
+    }
   },
   methods: {
     clickSearchButton() {

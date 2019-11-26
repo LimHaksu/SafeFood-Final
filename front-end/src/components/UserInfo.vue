@@ -126,8 +126,8 @@
       />
       <input
         type="button"
-        id="delete_button"
         value="탈퇴"
+        @click="remove_user"
         style="font-weight:bold; float:left; width: 100px; height: 30px; color: white; background-color: #00bfff; border: 1 solid #00bfff; margin-left: 50px;"
       />
     </form>
@@ -155,7 +155,7 @@ export default {
     }
   },
   methods: {
-    modify: function() {
+    modify() {
       if (this.user.password == null) {
         alert("비밀번호를 입력해 주세요.");
         return;
@@ -173,6 +173,20 @@ export default {
         })
         .finally(() => {
           /* TODO: router 이용해서 화면 이동하는 것으로 바꾸자 */
+          window.location.href = "./";
+        });
+    },
+    remove_user() {
+      axios
+        .delete("http://localhost:8080/user/" + this.user.id)
+        .then(response => {
+          console.log(response);
+          this.$store.commit("logout");
+        })
+        .catch(() => {
+          console.log("탈퇴 에러");
+        })
+        .finally(() => {
           window.location.href = "./";
         });
     }

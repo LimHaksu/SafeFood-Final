@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.reply.rest">
+	<select id="select" resultType="reply" parameterType="String">
+		select * from reply
+		<if test="value != null"> <!-- value: 하나의 파라미터가 넘어올 때 -->
+			where no=#{no}
+		</if>
+	</select>
+	
+	<insert id="insert" parameterType="reply">
+		insert into
+		reply (no, writer, comments)
+		values(#{no}, #{writer}, #{comments})
+	</insert>
+	
+	<update id="update" parameterType="reply">
+		update reply 
+		set comments=#{comments}
+		where no=#{no} and writer=#{writer}
+	</update>
+	
+	<delete id="delete" parameterType="reply">
+		delete from reply
+		where no=#{no} and writer=#{writer}
+	</delete>
+</mapper>
+
+
+
+
+
+

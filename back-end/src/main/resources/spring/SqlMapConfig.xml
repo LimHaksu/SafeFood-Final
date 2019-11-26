@@ -11,10 +11,12 @@
 		<typeAlias type="com.ssafy.dto.Food"    alias="food"/>
 		<typeAlias type="com.ssafy.dto.User"    alias="user"/>
 		<typeAlias type="com.ssafy.dto.Post"   	alias="post"/>
+		<typeAlias type="com.ssafy.dto.Reply"	alias="reply"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="spring/foodmapper.xml" />
 		<mapper resource="spring/usermapper.xml" />
 	 	<mapper resource="spring/board_query_rest.xml"/>
+		<mapper resource="spring/reply_query_rest.xml"/>
 	</mappers>
 </configuration>

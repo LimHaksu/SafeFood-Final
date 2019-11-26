@@ -17,43 +17,70 @@
         </tr>
       </tbody>
     </table>
-    <span style="color:#ffffff">
+    <span style="color:black">
       <h5>내용</h5>
     </span>
     <div id="contents" v-show="!contents_modifyflag">
       <!--여기에 본문-->
       {{post.contents}}
       <br />
-      <a class="btn btn-default pull-right" @click="contents_modify">수정</a>
+      <a
+        class="btn btn-default pull-right"
+        @click="contents_modify"
+        v-if="post.writer==$store.getters.user.id"
+      >수정</a>
     </div>
     <div id="contents" v-show="contents_modifyflag">
       <textarea style="width:700px; height:300px;" v-model="post.contents"></textarea>
       <br />
       <a class="btn btn-default pull-right" @click="writePost">등록</a>
     </div>
-    <a class="btn btn-default pull-right" @click="deletePost">삭제</a>
+    <a
+      class="btn btn-default pull-right"
+      @click="deletePost"
+      v-if="post.writer==$store.getters.user.id"
+    >삭제</a>
     <hr />
-    <span style="color:#ffffff">
+    <span style="color:black">
       <h5>답변</h5>
     </span>
-    <div id="contents" v-show="post.comments!=null && !comments_modifyflag">
-      {{post.comments}}
-      <br />
-      <a class="btn btn-default pull-right" @click="comments_modify">수정</a>
-    </div>
-    <div id="comments" v-show="post.comments==null || comments_modifyflag">
-      <textarea style="width:700px; height:300px;" v-model="temp_comments"></textarea>
-      <br />
-      <a class="btn btn-default pull-right" @click="writeComment">등록</a>
-    </div>
-    <a class="btn btn-default pull-right" @click="deleteComment">삭제</a>
+    <table class="table table-hover">
+      <template v-for="r in reply_list">
+        <tr v-bind:key="r.writer">
+          <th>작성자</th>
+        </tr>
+        <tr v-bind:key="r.writer">
+          <td>{{r.writer}}</td>
+        </tr>
+        <tr v-bind:key="r.writer">
+          <br />
+          <div id="contents" v-show="!comments_modifyflag || r.writer!=$store.getters.user.id">
+            {{r.comments}}
+            <div v-if="r.writer==$store.getters.user.id">
+              <a class="btn btn-default pull-right" @click="comments_modify(r.comments)">수정</a>
+              <a class="btn btn-default pull-right" @click="deleteComment">삭제</a>
+            </div>
+          </div>
+          <div id="contents" v-show="comments_modifyflag" v-if="r.writer==$store.getters.user.id">
+            <textarea style="width:700px; height:300px;" v-model="reply.comments"></textarea>
+            <br />
+            <a class="btn btn-default pull-right" @click="updateComment">등록</a>
+          </div>
+        </tr>
+      </template>
+      <div v-if="authenticated && !find_my_comments" id="comments">
+        <textarea style="width:700px; height:300px;" v-model="reply.comments"></textarea>
+        <br />
+        <a class="btn btn-default pull-right" @click="writeComment">등록</a>
+      </div>
+    </table>
   </div>
 </template>
 <script>
-/* eslint-disable no-console */
 import axios from "axios";
 // import Vue from "vue";
 // Vue.prototype.EventBus = new Vue();
+/* eslint-disable no-console */
 var Request = function() {
   this.getParameter = function(name) {
     var rtnval = "";
@@ -78,11 +105,16 @@ export default {
   data() {
     return {
       post: {},
+      reply_list: [],
+      reply: {},
+      find_my_comments: false,
       loading: true,
       errored: false,
       temp_comments: "",
       contents_modifyflag: false,
-      comments_modifyflag: false
+      comments_modifyflag: false,
+      authenticated: false,
+      user_id: ""
     };
   },
   methods: {
@@ -107,34 +139,60 @@ export default {
         });
     },
     writeComment: function() {
-      if (this.temp_comments == "" || this.temp_comments == null) {
+      if (this.reply.comments == "") {
         alert("내용이 없습니다");
         return;
       }
-      this.post.comments = this.temp_comments;
+      this.reply.no = this.post.no;
+      console.log(this.$store.getters.user);
+      this.reply.writer = this.$store.getters.user.id;
       axios
-        .put("http://localhost:8080/board/", this.post)
+        .post("http://localhost:8080/reply/", this.reply)
         //.get('./emp.json')
         .then(response => {
           console.log(response);
-          console.log(this.post);
+          console.log(this.reply);
         })
         .catch(() => {
           this.errored = true;
         })
         .finally(() => {
           this.loading = false;
-          this.comments_modifyflag = false;
-          this.temp_comments = null;
+          // location.href = location.href;
+          this.$router.go(this.$router.currentRoute);
+        });
+    },
+    updateComment: function() {
+      if (this.reply.comments == "") {
+        alert("내용이 없습니다");
+        return;
+      }
+      this.post.comments = this.temp_comments;
+      this.reply.no = this.post.no;
+      this.reply.writer = this.$store.getters.user.id;
+      console.log("코멘트 ", this.reply.comments);
+      axios
+        .put("http://localhost:8080/reply/", this.reply)
+        .then(response => {
+          console.log(response);
+          console.log(this.reply);
+        })
+        .catch(() => {
+          this.errored = true;
+        })
+        .finally(() => {
+          this.loading = false;
+          // location.href = location.href;
+          this.$router.go(this.$router.currentRoute);
         });
     },
     contents_modify: function() {
       console.log("수정");
       this.contents_modifyflag = true;
     },
-    comments_modify: function() {
+    comments_modify: function(comments) {
       this.comments_modifyflag = true;
-      this.temp_comments = this.post.comments;
+      this.reply.comments = comments;
     },
     deletePost() {
       axios
@@ -149,12 +207,21 @@ export default {
         });
     },
     deleteComment() {
-      this.post.comments = null;
+      this.reply.no = this.post.no;
+      this.reply.writer = this.$store.getters.user.id;
+      this.reply.comments = "";
+      console.log("체크", this.reply);
       axios
-        .put("http://localhost:8080/board/", this.post)
-        .then(response => {
-          response;
+        .delete(
+          "http://localhost:8080/reply/" +
+            this.reply.no +
+            "/" +
+            this.reply.writer
+        )
+        .then(() => {
           console.log("코멘트는 삭제될까..?");
+
+          this.$router.go(this.$router.currentRoute);
         })
         .catch(() => {
           this.errored = true;
@@ -163,12 +230,28 @@ export default {
   },
   filters: {},
   mounted() {
+    if (this.$store.getters.user != null) {
+      this.authenticated = true;
+      this.user_id = this.$store.getters.user.id;
+    } else {
+      this.authenticated = false;
+    }
+
     axios
       .get("http://localhost:8080/board/" + paramValue)
       //.get('./emp.json')
       .then(response => {
-        this.post = response.data;
-        console.log(this.post);
+        this.post = response.data.post;
+        this.reply_list = response.data.reply_list;
+        this.reply_list.forEach(reply => {
+          // console.log(reply.writer);
+          if (reply.writer == this.$store.getters.user.id) {
+            this.find_my_comments = true;
+            return;
+          }
+        });
+        // console.log(this.post);
+        // console.log(this.reply_list);
       })
       .catch(() => {
         this.errored = true;

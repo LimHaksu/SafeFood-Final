@@ -4,6 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ssafy.dto.Food;
+import com.ssafy.dto.Post;
+import com.ssafy.dto.Reply;
+import com.ssafy.dto.User;
+import com.ssafy.service.BoardService;
+import com.ssafy.service.FoodService;
+import com.ssafy.service.ReplyService;
+import com.ssafy.service.UserService;
+import com.ssafy.util.HashUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ssafy.dto.Food;
-import com.ssafy.dto.Post;
-import com.ssafy.dto.User;
-import com.ssafy.service.BoardService;
-import com.ssafy.service.FoodService;
-import com.ssafy.service.UserService;
-import com.ssafy.util.HashUtil;
 
 @CrossOrigin(origins = { "*" })
 @RestController
@@ -36,6 +38,9 @@ public class KyoungMooController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ReplyService replyService;
 
 	@GetMapping("foodlist")
 	public Map<String, Object> getFoods() {
@@ -84,7 +89,11 @@ public class KyoungMooController {
 	public ResponseEntity<Object> getBoardOne(@PathVariable String no) {
 		try {
 			Post post = boardService.select(no);
-			return response(post, HttpStatus.OK);
+			List<Reply> reply_list = replyService.select(no);
+			Map<String, Object> map = new HashMap<>();
+			map.put("post", post);
+			map.put("reply_list", reply_list);
+			return response(map, HttpStatus.OK);
 		} catch (RuntimeException e) {
 			throw e;
 		}
@@ -114,6 +123,42 @@ public class KyoungMooController {
 	public ResponseEntity<Object> deletePost(@PathVariable String no) {
 		try {
 			boolean isSuccess = boardService.delete(no);
+			return response(isSuccess, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			throw e;
+		}
+	}
+
+	/******************************************************************************** */
+
+	@PostMapping("/reply")
+	public ResponseEntity<Object> insertReply(@RequestBody Reply r) {
+		try {
+			System.out.println("시도");
+			boolean isSuccess = replyService.insert(r);
+			System.out.println("성공");
+			return response(isSuccess, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			System.out.println("실패");
+			throw e;
+		}
+	}
+
+	@PutMapping("/reply")
+	public ResponseEntity<Object> updateReply(@RequestBody Reply r) {
+		try {
+			boolean isSuccess = replyService.update(r);
+			return response(isSuccess, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			throw e;
+		}
+	}
+
+	@DeleteMapping("/reply/{no}/{writer}")
+	public ResponseEntity<Object> deleteReply(@PathVariable Integer no, @PathVariable String writer) {
+		try {
+			Reply r = new Reply(no, writer, "");
+			boolean isSuccess = replyService.delete(r);
 			return response(isSuccess, HttpStatus.OK);
 		} catch (RuntimeException e) {
 			throw e;

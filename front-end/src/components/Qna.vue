@@ -23,7 +23,7 @@
       </tbody>
     </table>
     <hr />
-    <a class="btn btn-default pull-right" href="./qna_write">글쓰기</a>
+    <a v-if="authenticated" class="btn btn-default pull-right" href="./qna_write">글쓰기</a>
   </div>
 </body>
 </template>
@@ -37,10 +37,16 @@ export default {
   data() {
     return {
       posts: [],
-      errored: false
+      errored: false,
+      authenticated: false
     };
   },
   mounted() {
+    if (this.$store.getters.user != null) {
+      this.authenticated = true;
+    } else {
+      this.authenticated = false;
+    }
     axios
       .get("http://localhost:8080/board")
       .then(response => {

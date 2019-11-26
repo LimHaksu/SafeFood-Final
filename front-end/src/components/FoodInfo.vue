@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-bind:style="{ backgroundColor : activeColor}">
     <div class="row">
       <!-- main start -->
       <!-- ================ -->
@@ -11,10 +11,12 @@
         <div class="image-box style-3-b">
           <div class="row">
             <div class="col-md-6 col-lg-4 col-xl-3">
-              <div id="img_box"></div>
+              <!-- <div id="img_box"> -->
+              <img width="200px" :src="require(`@/assets/${food.img}`)" />
+              <!-- </div>-->
             </div>
             <div class="col-lg-8 col-xl-7 pv-30">
-              <table class="table">
+              <table class="table" style="background-color:transparent">
                 <tbody>
                   <tr>
                     <td width="100">제품명</td>
@@ -36,8 +38,8 @@
               </table>
               <div class="product elements-list">
                 <div class="btn-group">
-                  <a href="#" onclick="addIntakeFood(2)" class="btn btn-primary btn-sm">추가</a>
-                  <a href="#" onclick="addIntakePrev(2)" class="btn btn-primary btn-sm">찜</a>
+                  <a href="#" v-show="authenticated" class="btn btn-primary btn-sm">추가</a>
+                  <a href="#" v-show="authenticated" class="btn btn-primary btn-sm">찜</a>
                 </div>
               </div>
             </div>
@@ -49,35 +51,10 @@
     <h1 class="page-title text-center">영양 정보</h1>
     <div class="row">
       <div class="col-sm-6">
-        <div
-          class="chartjs-size-monitor"
-          style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
-        >
-          <div
-            class="chartjs-size-monitor-expand"
-            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"
-          >
-            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
-          </div>
-          <div
-            class="chartjs-size-monitor-shrink"
-            style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"
-          >
-            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
-          </div>
-        </div>
-        <!-- <canvas
-          id="doughnut-graph"
-          height="277"
-          width="362"
-          class="chartjs-render-monitor"
-          style="display: block; width: 362px; height: 277px;"
-        ></canvas>-->
-        <!-- <apexchart type="pie" width="380" :options="chartOptions" :series="series" /> -->
-        <chart v-bind:chart-data="pchartdata" />
+        <chart v-bind:chart-data="pchartdata" v-bind:options="poptions" />
       </div>
       <div class="col-sm-6">
-        <table class="table">
+        <table class="table" style="background-color:transparent">
           <tbody>
             <tr>
               <td width="200">일일 제공량</td>
@@ -128,10 +105,8 @@
 </template>
 
 <script>
-// import { Chart } from "vue-chartjs";
 /* eslint-disable no-console */
 import axios from "axios";
-// import VueApexCharts from "vue-apexcharts";
 import chart from "./chart.js";
 var Request = function() {
   this.getParameter = function(name) {
@@ -159,10 +134,27 @@ export default {
   },
   data() {
     return {
+      authenticated: false,
       food: {},
+      allergy_sample: [
+        "대두",
+        "땅콩",
+        "우유",
+        "게",
+        "새우",
+        "참치",
+        "연어",
+        "쑥",
+        "소고기",
+        "닭고기",
+        "돼지고기",
+        "복숭아",
+        "민들레",
+        "계란흰자"
+      ],
+      allergy_list: [],
       pchartdata: {
         labels: [
-          "칼로리",
           "탄수화물",
           "단백질",
           "지방",
@@ -176,7 +168,6 @@ export default {
           {
             label: "Data One",
             backgroundColor: [
-              "khaki",
               "lightpink",
               "violet",
               "greenyellow",
@@ -186,49 +177,50 @@ export default {
               "lavender",
               "#abcdef"
             ],
-            data: [1, 2, 3, 4, 5, 6, 7, 8, 9.9]
+            data: []
           }
         ]
-      }
-      // nuturitions: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      // series: this.nuturitions,
-      // chartOptions: {
-      //   labels: [
-      //     "칼로리",
-      //     "탄수화물",
-      // "단백질",
-      // "지방",
-      // "당류",
-      // "나트륨",
-      // "콜레스테롤",
-      // "포화 지방산",
-      // "트렌스지방"
-      //   ],
-      //   responsive: [
-      //     {
-      //       breakpoint: 480,
-      //       options: {
-      //         chart: {
-      //           width: 200
-      //         },
-      //         legend: {
-      //           position: "bottom"
-      //         }
-      //       }
-      //     }
-      //   ]
-      // }
+      },
+      poptions: {
+        responsive: true,
+        maintainAspectRatio: false
+      },
+      allergy_find: false,
+      activeColor: `rgba(0,0,0,0)`
     };
   },
   mounted() {
+    if (this.$store.getters.user != null) {
+      this.authenticated = true;
+    } else {
+      this.authenticated = false;
+    }
     axios
       .get("http://localhost:8080/food/" + paramValue)
       //.get('./emp.json')
       .then(response => {
         this.food = response.data.food;
         console.log(this.food);
-        /*         this.pchartdata.datasets[0].data.push(this.food.supportpereat);
-        this.pchartdata.datasets[0].data.push(this.food.calory);
+        this.allergy_sample.forEach(a => {
+          if (this.food.material.includes(a)) {
+            this.allergy_list.push(a);
+          }
+        });
+        console.log(this.allergy_list);
+        let my_allergies = this.$store.getters.user.allergy.split(",");
+        my_allergies.forEach(a => {
+          this.allergy_list.forEach(b => {
+            if (a == b) {
+              this.allergy_find = true;
+            }
+          });
+          if (this.allergy_find) {
+            this.activeColor = `rgba(255,0,0,0.2)`;
+            return;
+          }
+        });
+        console.log(this.allergy_find);
+        this.food.allergy = this.allergy_list.join(",");
         this.pchartdata.datasets[0].data.push(this.food.carbo);
         this.pchartdata.datasets[0].data.push(this.food.protein);
         this.pchartdata.datasets[0].data.push(this.food.fat);
@@ -237,185 +229,14 @@ export default {
         this.pchartdata.datasets[0].data.push(this.food.chole);
         this.pchartdata.datasets[0].data.push(this.food.fattyacid);
         this.pchartdata.datasets[0].data.push(this.food.transfat);
-        console.log(this.pchartdata.datasets[0].data); */
+        console.log("데이터 넣기 완료");
       })
       .catch(() => {
         this.errored = true;
       })
       .finally(() => (this.loading = false));
-    // this.renderChart({
-    //   type: "doughnut",
-    //   labels: [
-    // "칼로리",
-    // "탄수화물",
-    // "단백질",
-    // "지방",
-    // "당류",
-    // "나트륨",
-    // "콜레스테롤",
-    // "포화 지방산",
-    // "트렌스지방"
-    //   ],
-    //   datasets: [
-    //     {
-    //       label: "# of Votes",
-    //       data: [
-    // nutr_cont1,
-    // nutr_cont2,
-    // nutr_cont3,
-    // nutr_cont4,
-    // nutr_cont5,
-    // nutr_cont6,
-    // nutr_cont7,
-    // nutr_cont8,
-    // nutr_cont9
-    //       ],
-    //       backgroundColor: [
-    //         "rgba(255, 99, 132, 0.2)",
-    //         "rgba(54, 162, 235, 0.2)",
-    //         "rgba(255, 206, 86, 0.2)",
-    //         "rgba(75, 192, 192, 0.2)",
-    //         "rgba(153, 102, 255, 0.2)",
-    //         "rgba(255, 159, 64, 0.2)",
-    //         "rgba(255, 153, 255, 0.2)",
-    //         "rgba(102, 0, 153, 0.2)",
-    //         "rgba(51, 0, 0, 0.2)"
-    //       ],
-    //       borderColor: [
-    //         "rgba(255, 99, 132, 1)",
-    //         "rgba(54, 162, 235, 1)",
-    //         "rgba(255, 206, 86, 1)",
-    //         "rgba(75, 192, 192, 1)",
-    //         "rgba(153, 102, 255, 1)",
-    //         "rgba(255, 159, 64, 1)",
-    //         "rgba(255, 153, 255, 1)",
-    //         "rgba(102, 0, 153, 1)",
-    //         "rgba(51, 0, 0, 1)"
-    //       ],
-    //       borderWidth: 1
-    //     }
-    //   ]
-    // });
   }
 };
-
-// var myChart = new Chart(ctx, {
-//   type: "doughnut",
-//   data: {
-//     labels: [
-//       "칼로리",
-//       "탄수화물",
-//       "단백질",
-//       "지방",
-//       "당류",
-//       "나트륨",
-//       "콜레스테롤",
-//       "포화 지방산",
-//       "트렌스지방"
-//     ],
-//     datasets: [
-//       {
-//         label: "# of Votes",
-//         data: [
-//           nutr_cont1,
-//           nutr_cont2,
-//           nutr_cont3,
-//           nutr_cont4,
-//           nutr_cont5,
-//           nutr_cont6,
-//           nutr_cont7,
-//           nutr_cont8,
-//           nutr_cont9
-//         ],
-//         backgroundColor: [
-//           "rgba(255, 99, 132, 0.2)",
-//           "rgba(54, 162, 235, 0.2)",
-//           "rgba(255, 206, 86, 0.2)",
-//           "rgba(75, 192, 192, 0.2)",
-//           "rgba(153, 102, 255, 0.2)",
-//           "rgba(255, 159, 64, 0.2)",
-//           "rgba(255, 153, 255, 0.2)",
-//           "rgba(102, 0, 153, 0.2)",
-//           "rgba(51, 0, 0, 0.2)"
-//         ],
-//         borderColor: [
-//           "rgba(255, 99, 132, 1)",
-//           "rgba(54, 162, 235, 1)",
-//           "rgba(255, 206, 86, 1)",
-//           "rgba(75, 192, 192, 1)",
-//           "rgba(153, 102, 255, 1)",
-//           "rgba(255, 159, 64, 1)",
-//           "rgba(255, 153, 255, 1)",
-//           "rgba(102, 0, 153, 1)",
-//           "rgba(51, 0, 0, 1)"
-//         ],
-//         borderWidth: 1
-//       }
-//     ]
-//   },
-//   options: {
-//     scales: {
-//       yAxes: [
-//         {
-//           ticks: {
-//             beginAtZero: true
-//           }
-//         }
-//       ]
-//     }
-//   }
-// });
-
-// $(document).ready(function () {
-// 	req_name = < %= '"' + name + '"' % >
-
-// 		$.ajax({
-// 			url: "search.do/name/" + req_name,
-// 			success: function (data) {
-// 				$.each(data.list, function (index, item) {
-// 					var tmp_name = item.name;
-// 					console.log(tmp_name);
-// 					if (tmp_name == req_name) {
-// 						var name = req_name;
-// 						var img = item.img;
-// 						var maker = item.maker
-// 						var material = item.material;
-
-// 						$("#img_box").append('<img src="' + img + '" width="250px">');
-// 						$("#name").text(name);
-// 						$("#maker").text(maker);
-// 						$("#material").text(material);
-
-// 						var serving_wt = item.supportpereat;
-// 						nutr_cont1 = item.calory;
-// 						nutr_cont2 = item.carbo;
-// 						nutr_cont3 = item.protein;
-// 						nutr_cont4 = item.fat;
-// 						nutr_cont5 = item.sugar;
-// 						nutr_cont6 = item.natrium;
-// 						nutr_cont7 = item.chole;
-// 						nutr_cont8 = item.fattyacid;
-// 						nutr_cont9 = item.transfat
-
-// 						$("#serving_wt").text(serving_wt);
-// 						$("#nutr_cont1").text(nutr_cont1);
-// 						$("#nutr_cont2").text(nutr_cont2);
-// 						$("#nutr_cont3").text(nutr_cont3);
-// 						$("#nutr_cont4").text(nutr_cont4);
-// 						$("#nutr_cont5").text(nutr_cont5);
-// 						$("#nutr_cont6").text(nutr_cont6);
-// 						$("#nutr_cont7").text(nutr_cont7);
-// 						$("#nutr_cont8").text(nutr_cont8);
-// 						$("#nutr_cont9").text(nutr_cont9);
-
-// 						var ctx = document.getElementById("doughnut-graph").getContext("2d")
-
-// 					}
-// 				})
-// 			}
-
-// 		})
-// })
 </script>
 <style>
 </style>

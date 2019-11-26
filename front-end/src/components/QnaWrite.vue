@@ -17,7 +17,7 @@
                   <input type="text" style="width:400px" v-model="post.title" />
                 </td>
                 <td>
-                  <input type="text" v-model="post.writer" />
+                  <input type="text" v-model="post.writer" readonly />
                 </td>
               </tr>
             </tbody>
@@ -39,9 +39,14 @@ import axios from "axios";
 export default {
   data() {
     return {
-      post: {},
+      post: {
+        writer: null
+      },
       errored: false
     };
+  },
+  mounted() {
+    this.post.writer = this.$store.getters.user.id;
   },
   methods: {
     /* eslint-disable no-console */
@@ -53,7 +58,6 @@ export default {
         .then(response => {
           response;
           console.log(this.post);
-          console.log(this.$session.flash.get("user"));
         })
         .catch(error => {
           console.log(error);

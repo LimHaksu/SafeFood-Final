@@ -7,6 +7,7 @@ import router from './components'
 import store from './store'
 import VueCharts from 'vue-chartjs'
 import VueI18n from 'vue-i18n'
+// import i18n from 'i18n-js'
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueCharts)
@@ -21,7 +22,7 @@ window.i18n = new VueI18n({
 });
 new Vue({
   el: '#app',
-  i18n: {},
+  i18n: window.i18n,
   render: h => h(App),
   router,
   store

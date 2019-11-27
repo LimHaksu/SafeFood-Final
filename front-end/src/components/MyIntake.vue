@@ -1,47 +1,60 @@
 <template>
   <div>
     내섭취정보
-    <b-container>
-      <b-row>
-        <b-col>
-          <full-calendar
-            :event-sources="events"
-            @event-selected="eventSelected"
-            @day-click="dayClick"
-            :config="config"
-            :events="events"
-          />
-        </b-col>
-        <b-col>
-          <br />
-          <div>
-            <b-container fluid>
-              <b-table :items="items" :fields="fields">
-                <template v-slot:cell(name)="row">
-                  <a :href="'./food_info?foodCode='+row.item.code">{{row.item.name}}</a>
-                </template>
-                <template v-slot:cell(delete)="row">
-                  <b-button
-                    variant="danger"
-                    @click="delete_food(row.item, row.index, $event.target)"
-                  >안먹음</b-button>
-                </template>
-              </b-table>
-            </b-container>
-          </div>
-        </b-col>
-        <b-col>
-          하루 섭취량
-          <b-table :items="items_statistics" :fields="fields_statistics"></b-table>
-        </b-col>
-        <b-col>영양소별 음식 비율</b-col>
-      </b-row>
-    </b-container>
+    <!-- <b-container> -->
+    <b-row>
+      <b-col>
+        <full-calendar
+          :event-sources="events"
+          @event-selected="eventSelected"
+          @day-click="dayClick"
+          :config="config"
+          :events="events"
+        />
+      </b-col>
+      <b-col>
+        <br />
+        <div>
+          <b-container fluid>
+            <b-table :items="items" :fields="fields">
+              <template v-slot:cell(name)="row">
+                <a :href="'./food_info?foodCode='+row.item.code">{{row.item.name}}</a>
+              </template>
+              <template v-slot:cell(delete)="row">
+                <b-button
+                  variant="danger"
+                  @click="delete_food(row.item, row.index, $event.target)"
+                >안먹음</b-button>
+              </template>
+            </b-table>
+          </b-container>
+        </div>
+      </b-col>
+      <b-col>
+        하루 섭취량
+        <b-table :items="items_statistics" :fields="fields_statistics">
+          <template v-slot:cell(nuturition)="row">
+            <a @click="nuturition_detail(row.item)">{{row.item.nuturition}}</a>
+          </template>
+          <template v-slot:cell(amount)="row">
+            <a @click="nuturition_detail(row.item)">{{row.item.amount}}</a>
+          </template>
+        </b-table>
+      </b-col>
+      <b-col>
+        영양소별 음식 비율
+        <br />
+        {{clicked_nuturition}}
+        <chart v-bind:chart-data="pchartdata" v-bind:options="poptions" />
+      </b-col>
+    </b-row>
+    <!-- </b-container> -->
   </div>
 </template>
 <script>
 /* eslint-disable no-console */
 import axios from "axios";
+import chart from "./chart.js";
 import { FullCalendar } from "vue-full-calendar";
 import "fullcalendar/dist/fullcalendar.css";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -91,13 +104,54 @@ export default {
         transfat: null
       },
       selected_date: null,
-      detail_flag: false
+      clicked_nuturition: "",
+      detail_flag: false,
+      pchartdata: {
+        labels: [],
+        datasets: [
+          {
+            label: "Data One",
+            backgroundColor: [
+              "lightpink",
+              "violet",
+              "greenyellow",
+              "#42b983",
+              "lightskyblue",
+              "lightsalmon",
+              "lavender",
+              "#abcdef"
+            ],
+            data: []
+          }
+        ]
+      },
+      poptions: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
     };
   },
   mounted() {
     this.user_id = this.$store.getters.user.id;
   },
   methods: {
+    nuturition_detail(nuturition) {
+      let nkey = nuturition.key;
+      this.clicked_nuturition = nuturition.nuturition;
+      console.log(nuturition);
+      console.log(this.taken_foods);
+      this.pchartdata.labels = [];
+      this.pchartdata.datasets[0].data = [];
+      this.taken_foods.forEach(food => {
+        Object.keys(food).forEach(key => {
+          if (key == nkey) {
+            this.pchartdata.labels.push(food.name);
+            this.pchartdata.datasets[0].data.push(food[key]);
+            return;
+          }
+        });
+      });
+    },
     init_statistics(statistics) {
       Object.keys(statistics).forEach(key => {
         statistics[key] = 0;
@@ -132,6 +186,7 @@ export default {
           let chole = 0;
           let fattyacid = 0;
           let transfat = 0;
+          this.taken_foods = [];
           Promise.all(
             data.map(async info => {
               return axios
@@ -164,42 +219,52 @@ export default {
             if (this.items.length > 0) {
               this.detail_flag = true;
               this.items_statistics.push({
+                key: "supportpereat",
                 nuturition: "제공량(g)",
                 amount: parseFloat(supportpereat.toFixed(2))
               });
               this.items_statistics.push({
+                key: "calory",
                 nuturition: "칼로리(kcal)",
                 amount: parseFloat(calory.toFixed(2))
               });
               this.items_statistics.push({
+                key: "carbo",
                 nuturition: "탄수화물(g)",
                 amount: parseFloat(carbo.toFixed(2))
               });
               this.items_statistics.push({
+                key: "protein",
                 nuturition: "단백질(g)",
                 amount: parseFloat(protein.toFixed(2))
               });
               this.items_statistics.push({
+                key: "fat",
                 nuturition: "지방(g)",
                 amount: parseFloat(fat.toFixed(2))
               });
               this.items_statistics.push({
+                key: "sugar",
                 nuturition: "당류(g)",
                 amount: parseFloat(sugar.toFixed(2))
               });
               this.items_statistics.push({
+                key: "natrium",
                 nuturition: "나트륨(mg)",
                 amount: parseFloat(natrium.toFixed(2))
               });
               this.items_statistics.push({
+                key: "chole",
                 nuturition: "콜레스테롤(mg)",
                 amount: parseFloat(chole.toFixed(2))
               });
               this.items_statistics.push({
+                key: "fattyacid",
                 nuturition: "지방산(g)",
                 amount: parseFloat(fattyacid.toFixed(2))
               });
               this.items_statistics.push({
+                key: "transfat",
                 nuturition: "트랜스지방(g)",
                 amount: parseFloat(transfat.toFixed(2))
               });
@@ -233,11 +298,14 @@ export default {
         .then(response => {
           console.log(response);
           this.dayClick(this.selected_date);
+          this.pchartdata.labels = [];
+          this.pchartdata.datasets[0].data = [];
         });
     }
   },
   components: {
-    FullCalendar
+    FullCalendar,
+    chart
   }
 };
 </script>

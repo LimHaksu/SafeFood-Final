@@ -24,14 +24,14 @@
       <!--여기에 본문-->
       {{post.contents}}
       <br />
-      <a class="btn btn-default pull-right" @click="contents_modify" v-if="post.writer==user_id">수정</a>
+      <b-button v-if="post.writer==user_id" @click="contents_modify" variant="outline-primary">수정</b-button>
+      <b-button v-if="post.writer==user_id" @click="deletePost" variant="danger">삭제</b-button>
     </div>
     <div id="contents" v-show="contents_modifyflag">
       <textarea style="width:700px; height:300px;" v-model="post.contents"></textarea>
       <br />
-      <a class="btn btn-default pull-right" @click="writePost">등록</a>
+      <b-button @click="writePost" variant="primary">등록</b-button>
     </div>
-    <a class="btn btn-default pull-right" @click="deletePost" v-if="post.writer==user_id">삭제</a>
     <hr />
     <span style="color:black">
       <h5>답변</h5>
@@ -49,21 +49,21 @@
           <div id="contents" v-show="!comments_modifyflag || r.writer!=user_id">
             {{r.comments}}
             <div v-if="r.writer==user_id">
-              <a class="btn btn-default pull-right" @click="comments_modify(r.comments)">수정</a>
-              <a class="btn btn-default pull-right" @click="deleteComment">삭제</a>
+              <b-button @click="comments_modify(r.comments)" variant="outline-primary">수정</b-button>
+              <b-button @click="deleteComment" variant="danger">삭제</b-button>
             </div>
           </div>
           <div id="contents" v-show="comments_modifyflag" v-if="r.writer==user_id">
             <textarea style="width:700px; height:300px;" v-model="reply.comments"></textarea>
             <br />
-            <a class="btn btn-default pull-right" @click="updateComment">등록</a>
+            <b-button @click="updateComment" variant="primary">등록</b-button>
           </div>
         </tr>
       </template>
       <div v-if="authenticated && !find_my_comments" id="comments">
         <textarea style="width:700px; height:300px;" v-model="reply.comments"></textarea>
         <br />
-        <a class="btn btn-default pull-right" @click="writeComment">등록</a>
+        <b-button @click="writeComment" variant="primary">등록</b-button>
       </div>
     </table>
   </div>

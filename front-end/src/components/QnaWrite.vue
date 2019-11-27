@@ -23,9 +23,9 @@
             </tbody>
           </table>
           <hr />
-          <textarea style="width:700px; height:800px;" v-model="post.contents"></textarea>
+          <textarea style="width:700px; height:500px;" v-model="post.contents"></textarea>
           <br />
-          <a class="btn btn-default pull-right" @click="write">등록</a>
+          <b-button @click="wirte" variant="outline-primary">등록</b-button>
         </div>
       </div>
     </nav>

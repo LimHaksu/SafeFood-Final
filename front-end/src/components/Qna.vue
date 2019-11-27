@@ -23,7 +23,7 @@
       </tbody>
     </table>
     <hr />
-    <a v-if="authenticated" class="btn btn-default pull-right" href="./qna_write">글쓰기</a>
+    <b-button v-if="authenticated" href="./qna_write" variant="outline-primary">글쓰기</b-button>
   </div>
 </body>
 </template>

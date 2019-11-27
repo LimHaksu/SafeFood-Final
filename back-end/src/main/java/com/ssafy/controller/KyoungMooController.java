@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.ssafy.dto.Food;
 import com.ssafy.dto.Intake;
+import com.ssafy.dto.FriendInfo;
 import com.ssafy.dto.Post;
 import com.ssafy.dto.Reply;
 import com.ssafy.dto.User;
@@ -266,9 +267,53 @@ public class KyoungMooController {
 		User user = userService.findUser(userid);
 		userService.deleteUser(user);
 
-		// TODO: 세션 초기화 하자
-		// session.invalidate();
 		return response(true, HttpStatus.OK);
+	}
+
+	@PostMapping("friend")
+	public ResponseEntity<Object> addFriend(@RequestBody FriendInfo info) {
+		System.out.println(info.getOwnerId() + ", " + info.getFriendId());
+		User user = userService.findUser(info.getOwnerId());
+
+		System.out.println("user : " + user);
+
+		if (user.getFriend() != null) {
+			String[] friends = user.getFriend().split(",");
+
+			for (String f : friends) {
+				if (f.equals(info.getFriendId())) {
+					// 이미 있는지 체크
+					return response(false, HttpStatus.FOUND);
+				}
+			}
+
+			// 없으면 추가
+			user.setFriend(user.getFriend() + "," + info.getFriendId());
+		} else {
+			user.setFriend(info.getFriendId());
+		}
+
+		// db에 friend가 있을까?
+		User search = userService.findUser(info.getFriendId());
+
+		System.out.println("after user : " + user);
+		System.out.println("search : " + search);
+
+		if (search == null) {
+			return response(false, HttpStatus.BAD_REQUEST);
+		} else {
+			userService.addFriend(user);
+			return response(true, HttpStatus.OK);
+		}
+	}
+
+	@GetMapping("friend/{ownerId}")
+	public ResponseEntity<Object> getFriendList(@PathVariable String ownerId) {
+		User user = userService.findUser(ownerId);
+
+		String[] friends = user.getFriend().split(",");
+
+		return response(friends, HttpStatus.OK);
 	}
 
 	private ResponseEntity<Object> response(Object data, HttpStatus status) {

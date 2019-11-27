@@ -177,6 +177,7 @@ public class KyoungMooController {
 	@GetMapping("/intake/{id}/{date}")
 	public ResponseEntity<Object> getIntake(@PathVariable String id, @PathVariable Date date) {
 		try {
+			System.out.println(date);
 			Intake intake = new Intake(id, date, 0);
 			List<Intake> intake_list = intakeService.select(intake);
 			return response(intake_list, HttpStatus.OK);

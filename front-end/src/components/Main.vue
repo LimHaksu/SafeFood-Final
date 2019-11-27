@@ -62,6 +62,7 @@
 <script>
 /* eslint-disable no-console */
 import axios from "axios";
+import moment from "moment";
 
 export default {
   data() {
@@ -115,9 +116,13 @@ export default {
 
       let info = {
         code: foodCode,
-        date: new Date(Date.now()),
+        date: moment(new Date(Date.now()))
+          .format("YYYYMMDD")
+          .toString(),
         id: sessionInfo
       };
+
+      console.log(info);
 
       axios
         .post("http://localhost:8080/intake", info)

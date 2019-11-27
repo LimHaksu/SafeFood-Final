@@ -207,18 +207,20 @@ export default {
           }
         });
         console.log(this.allergy_list);
-        let my_allergies = this.$store.getters.user.allergy.split(",");
-        my_allergies.forEach(a => {
-          this.allergy_list.forEach(b => {
-            if (a == b) {
-              this.allergy_find = true;
+        if (this.authenticated) {
+          let my_allergies = this.$store.getters.user.allergy.split(",");
+          my_allergies.forEach(a => {
+            this.allergy_list.forEach(b => {
+              if (a == b) {
+                this.allergy_find = true;
+              }
+            });
+            if (this.allergy_find) {
+              this.activeColor = `rgba(255,0,0,0.2)`;
+              return;
             }
           });
-          if (this.allergy_find) {
-            this.activeColor = `rgba(255,0,0,0.2)`;
-            return;
-          }
-        });
+        }
         console.log(this.allergy_find);
         this.food.allergy = this.allergy_list.join(",");
         this.pchartdata.datasets[0].data.push(this.food.carbo);

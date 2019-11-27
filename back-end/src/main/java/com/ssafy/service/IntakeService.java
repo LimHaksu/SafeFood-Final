@@ -11,7 +11,5 @@ public interface IntakeService {
 
 	public boolean insert(Intake intake);
 
-	public boolean update(Intake intake);
-
 	public boolean delete(Intake intake);
 }

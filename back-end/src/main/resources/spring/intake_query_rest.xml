@@ -5,7 +5,7 @@
 
 <mapper namespace="sql.intake.rest">
 	<select id="select" resultType="intake" parameterType="intake">
-		select * from intake where id=#{no} and date=#{date}
+		select * from intake where id=#{id} and date=#{date}
 	</select>
 	
 	<insert id="insert" parameterType="intake">

@@ -23,6 +23,7 @@ import axios from "axios";
 import { FullCalendar } from "vue-full-calendar";
 import "fullcalendar/dist/fullcalendar.css";
 import interactionPlugin from "@fullcalendar/interaction";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -60,19 +61,10 @@ export default {
       console.log(event);
     },
     dayClick(info) {
-      let year = info._d.getFullYear();
-      let month = info._d.getMonth();
-      let date = info._d.getDate();
-      let date_string = year + "-" + month + "-" + date;
-      console.log(info._d.toJSON());
-      console.log(year, month, date);
+      let date_type = moment(info._d).format("YYYY-MM-DD");
+      console.log(date_type);
       axios
-        .get(
-          "http://localhost:8080/intake/" +
-            this.user_id +
-            "/" +
-            Date(date_string)
-        )
+        .get("http://localhost:8080/intake/" + this.user_id + "/" + date_type)
         .then(response => {
           console.log(response);
           // this.posts = response.data;

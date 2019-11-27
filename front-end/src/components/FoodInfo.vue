@@ -57,43 +57,43 @@
         <table class="table" style="background-color:transparent">
           <tbody>
             <tr>
-              <td width="200">일일 제공량</td>
+              <td width="200">1회 제공량(g)</td>
               <td id="serving_wt">{{food.supportpereat}}</td>
             </tr>
             <tr>
-              <td width="200">칼로리</td>
+              <td width="200">칼로리(kcal)</td>
               <td id="nutr_cont1">{{food.calory}}</td>
             </tr>
             <tr>
-              <td width="200">탄수화물</td>
+              <td width="200">탄수화물(g)</td>
               <td id="nutr_cont2">{{food.carbo}}</td>
             </tr>
             <tr>
-              <td width="200">단백질</td>
+              <td width="200">단백질(g)</td>
               <td id="nutr_cont3">{{food.protein}}</td>
             </tr>
             <tr>
-              <td width="200">지방</td>
+              <td width="200">지방(g)</td>
               <td id="nutr_cont4">{{food.fat}}</td>
             </tr>
             <tr>
-              <td width="200">당류</td>
+              <td width="200">당류(g)</td>
               <td id="nutr_cont5">{{food.sugar}}</td>
             </tr>
             <tr>
-              <td width="200">나트륨</td>
+              <td width="200">나트륨(mg)</td>
               <td id="nutr_cont6">{{food.natrium}}</td>
             </tr>
             <tr>
-              <td width="200">콜레스테롤</td>
+              <td width="200">콜레스테롤(mg)</td>
               <td id="nutr_cont7">{{food.chole}}</td>
             </tr>
             <tr>
-              <td width="200">포화 지방산</td>
+              <td width="200">포화 지방산(g)</td>
               <td id="nutr_cont8">{{food.fattyacid}}</td>
             </tr>
             <tr>
-              <td width="200">트렌스지방</td>
+              <td width="200">트렌스지방(g)</td>
               <td id="nutr_cont9">{{food.transfat}}</td>
             </tr>
           </tbody>
@@ -195,11 +195,12 @@ export default {
     } else {
       this.authenticated = false;
     }
+    console.log(paramValue);
     axios
       .get("http://localhost:8080/food/" + paramValue)
       //.get('./emp.json')
       .then(response => {
-        this.food = response.data.food;
+        this.food = response.data;
         console.log(this.food);
         this.allergy_sample.forEach(a => {
           if (this.food.material.includes(a)) {
@@ -227,8 +228,8 @@ export default {
         this.pchartdata.datasets[0].data.push(this.food.protein);
         this.pchartdata.datasets[0].data.push(this.food.fat);
         this.pchartdata.datasets[0].data.push(this.food.sugar);
-        this.pchartdata.datasets[0].data.push(this.food.natrium);
-        this.pchartdata.datasets[0].data.push(this.food.chole);
+        this.pchartdata.datasets[0].data.push(this.food.natrium / 1000);
+        this.pchartdata.datasets[0].data.push(this.food.chole / 1000);
         this.pchartdata.datasets[0].data.push(this.food.fattyacid);
         this.pchartdata.datasets[0].data.push(this.food.transfat);
         console.log("데이터 넣기 완료");

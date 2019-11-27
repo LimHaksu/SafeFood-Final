@@ -15,7 +15,7 @@
 </template>
 <script>
 import axios from "axios";
-
+/* eslint-disable no-console */
 export default {
   data() {
     return {
@@ -42,9 +42,7 @@ export default {
           console.log("으악");
           this.getFriend();
         })
-        .catch(error => {
-          console.log(error);
-        });
+        .catch(() => {});
     },
     getFriend() {
       axios
@@ -53,9 +51,7 @@ export default {
           this.friend = res.data;
           console.log(this.friend);
         })
-        .catch(error => {
-          console.log(error);
-        });
+        .catch(() => {});
     }
   }
 };

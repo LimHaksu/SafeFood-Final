@@ -8,7 +8,6 @@
             :event-sources="events"
             @event-selected="eventSelected"
             @day-click="dayClick"
-            @view-render="viewRender"
             :config="config"
             :events="events"
           />
@@ -20,6 +19,7 @@
 </template>
 <script>
 /* eslint-disable no-console */
+import axios from "axios";
 import { FullCalendar } from "vue-full-calendar";
 import "fullcalendar/dist/fullcalendar.css";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -45,8 +45,12 @@ export default {
         defaultView: "month",
         height: 500
       },
-      plugins: [interactionPlugin]
+      plugins: [interactionPlugin],
+      user_id: null
     };
+  },
+  mounted() {
+    this.user_id = this.$store.getters.user.id;
   },
   methods: {
     refreshEvents() {
@@ -59,8 +63,24 @@ export default {
       let year = info._d.getFullYear();
       let month = info._d.getMonth();
       let date = info._d.getDate();
-      console.log(info);
+      let date_string = year + "-" + month + "-" + date;
+      console.log(info._d.toJSON());
       console.log(year, month, date);
+      axios
+        .get(
+          "http://localhost:8080/intake/" +
+            this.user_id +
+            "/" +
+            Date(date_string)
+        )
+        .then(response => {
+          console.log(response);
+          // this.posts = response.data;
+          // console.log(this.posts);
+        })
+        .catch(() => {
+          this.errored = true;
+        });
     }
   },
   components: {

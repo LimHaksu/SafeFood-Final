@@ -61,10 +61,12 @@ export default {
       console.log(event);
     },
     dayClick(info) {
-      let date_type = moment(info._d).format("YYYY-MM-DD");
-      console.log(date_type);
+      let date_string = moment(info._d)
+        .format("YYYYMMDD")
+        .toString();
+      console.log(date_string);
       axios
-        .get("http://localhost:8080/intake/" + this.user_id + "/" + date_type)
+        .get("http://localhost:8080/intake/" + this.user_id + "/" + date_string)
         .then(response => {
           console.log(response);
           // this.posts = response.data;

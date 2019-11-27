@@ -14,6 +14,7 @@
   </div>
 </template>
 <script>
+/* eslint-disable no-console */
 import axios from "axios";
 /* eslint-disable no-console */
 export default {

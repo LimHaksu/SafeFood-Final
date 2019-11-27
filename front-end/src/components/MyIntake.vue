@@ -167,6 +167,8 @@ export default {
       this.selected_date = info;
       this.items = [];
       this.items_statistics = [];
+      this.pchartdata.labels = [];
+      this.pchartdata.datasets[0].data = [];
       let date_string = moment(info._d)
         .format("YYYYMMDD")
         .toString();

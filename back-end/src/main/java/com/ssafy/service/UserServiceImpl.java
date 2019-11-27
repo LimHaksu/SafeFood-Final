@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao udao;
-	
+
 	@Override
 	public void insertUser(User user) {
 		udao.insertUser(user);
@@ -35,14 +35,19 @@ public class UserServiceImpl implements UserService{
 	public User login(String id, String pw) {
 		User user = udao.findUser(id);
 		System.out.println(user);
-		if(user == null || pw == null) {
+		if (user == null || pw == null) {
 			return null;
 		}
-		if(pw.equals(user.getPassword())) {
+		if (pw.equals(user.getPassword())) {
 			return user;
-		}else {
+		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public int addFriend(User user) {
+		return udao.addFriend(user);
 	}
 
 }

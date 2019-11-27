@@ -1,13 +1,12 @@
 package com.ssafy.controller;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.ssafy.dto.Food;
-import com.ssafy.dto.Intake;
 import com.ssafy.dto.FriendInfo;
+import com.ssafy.dto.Intake;
 import com.ssafy.dto.Post;
 import com.ssafy.dto.Reply;
 import com.ssafy.dto.User;
@@ -175,9 +174,8 @@ public class KyoungMooController {
 	/*****************************************************************************/
 
 	@GetMapping("/intake/{id}/{date}")
-	public ResponseEntity<Object> getIntake(@PathVariable String id, @PathVariable Date date) {
+	public ResponseEntity<Object> getIntake(@PathVariable String id, @PathVariable String date) {
 		try {
-			System.out.println(date);
 			Intake intake = new Intake(id, date, 0);
 			List<Intake> intake_list = intakeService.select(intake);
 			return response(intake_list, HttpStatus.OK);
@@ -200,7 +198,7 @@ public class KyoungMooController {
 	}
 
 	@DeleteMapping("/intake/{id}/{date}/{code}")
-	public ResponseEntity<Object> deleteReply(@PathVariable String id, @PathVariable Date date,
+	public ResponseEntity<Object> deleteReply(@PathVariable String id, @PathVariable String date,
 			@PathVariable Integer code) {
 		try {
 			Intake intake = new Intake(id, date, code);

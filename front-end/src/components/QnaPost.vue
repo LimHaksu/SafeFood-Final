@@ -24,22 +24,14 @@
       <!--여기에 본문-->
       {{post.contents}}
       <br />
-      <a
-        class="btn btn-default pull-right"
-        @click="contents_modify"
-        v-if="post.writer==$store.getters.user.id"
-      >수정</a>
+      <a class="btn btn-default pull-right" @click="contents_modify" v-if="post.writer==user_id">수정</a>
     </div>
     <div id="contents" v-show="contents_modifyflag">
       <textarea style="width:700px; height:300px;" v-model="post.contents"></textarea>
       <br />
       <a class="btn btn-default pull-right" @click="writePost">등록</a>
     </div>
-    <a
-      class="btn btn-default pull-right"
-      @click="deletePost"
-      v-if="post.writer==$store.getters.user.id"
-    >삭제</a>
+    <a class="btn btn-default pull-right" @click="deletePost" v-if="post.writer==user_id">삭제</a>
     <hr />
     <span style="color:black">
       <h5>답변</h5>
@@ -54,14 +46,14 @@
         </tr>
         <tr v-bind:key="r.writer">
           <br />
-          <div id="contents" v-show="!comments_modifyflag || r.writer!=$store.getters.user.id">
+          <div id="contents" v-show="!comments_modifyflag || r.writer!=user_id">
             {{r.comments}}
-            <div v-if="r.writer==$store.getters.user.id">
+            <div v-if="r.writer==user_id">
               <a class="btn btn-default pull-right" @click="comments_modify(r.comments)">수정</a>
               <a class="btn btn-default pull-right" @click="deleteComment">삭제</a>
             </div>
           </div>
-          <div id="contents" v-show="comments_modifyflag" v-if="r.writer==$store.getters.user.id">
+          <div id="contents" v-show="comments_modifyflag" v-if="r.writer==user_id">
             <textarea style="width:700px; height:300px;" v-model="reply.comments"></textarea>
             <br />
             <a class="btn btn-default pull-right" @click="updateComment">등록</a>

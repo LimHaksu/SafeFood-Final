@@ -41,7 +41,11 @@
                     </li>
                     <li>{{food.material}}</li>
                     <li>
-                      <button v-show="authenticated" id="btn_add" class="btn btn-primary btn-sm">추가</button>
+                      <button
+                        v-show="authenticated"
+                        class="btn btn-primary btn-sm"
+                        @click="clickAddition(food.code)"
+                      >추가</button>
                       <button v-show="authenticated" id="btn_zzim" class="btn btn-primary btn-sm">찜</button>
                     </li>
                   </ul>
@@ -56,7 +60,9 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -75,7 +81,6 @@ export default {
   },
   methods: {
     clickSearchButton() {
-      /* eslint-disable no-console */
       console.log("클릭!");
 
       if (this.contents == "") {
@@ -98,13 +103,27 @@ export default {
         .catch(() => {
           alert("foodList 못가져옴");
         });
+    },
+    clickAddition(foodCode) {
+      console.log("whoa");
+
+      let sessionInfo = this.$store.getters.user.id;
+
+      if (sessionInfo == null) {
+        return;
+      }
+
+      let info = {
+        code: foodCode,
+        date: new Date(Date.now()),
+        id: sessionInfo
+      };
+
+      axios
+        .post("http://localhost:8080/intake", info)
+        .then(() => {})
+        .catch();
     }
   }
 };
-
-/* TODO: 얘는 router 이용해서 페이지 이동할꺼에연
-$(document).on("click", ".product_name", function(event) {
-  location.href = "foodInfo.jsp?foodName=" + $(this).text();
-});
-*/
 </script>

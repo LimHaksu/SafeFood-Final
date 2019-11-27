@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Intake {
     String id;
-    Date date;
+    String date;
     Integer code;
 }

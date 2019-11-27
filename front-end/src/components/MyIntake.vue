@@ -31,9 +31,10 @@
           </div>
         </b-col>
         <b-col>
-          안녕
+          하루 섭취량
           <b-table :items="items_statistics" :fields="fields_statistics"></b-table>
         </b-col>
+        <b-col>영양소별 음식 비율</b-col>
       </b-row>
     </b-container>
   </div>
@@ -89,7 +90,8 @@ export default {
         fattyacid: null,
         transfat: null
       },
-      selected_date: null
+      selected_date: null,
+      detail_flag: false
     };
   },
   mounted() {
@@ -159,47 +161,52 @@ export default {
             })
           ).then(() => {
             console.log("외부 ", carbo);
-            this.items_statistics.push({
-              nuturition: "제공량(g)",
-              amount: supportpereat.toFixed(2)
-            });
-            this.items_statistics.push({
-              nuturition: "칼로리(kcal)",
-              amount: calory.toFixed(2)
-            });
-            this.items_statistics.push({
-              nuturition: "탄수화물(g)",
-              amount: carbo.toFixed(2)
-            });
-            this.items_statistics.push({
-              nuturition: "단백질(g)",
-              amount: protein.toFixed(2)
-            });
-            this.items_statistics.push({
-              nuturition: "지방(g)",
-              amount: fat.toFixed(2)
-            });
-            this.items_statistics.push({
-              nuturition: "당류(g)",
-              amount: sugar.toFixed(2)
-            });
-            this.items_statistics.push({
-              nuturition: "나트륨(mg)",
-              amount: natrium.toFixed(2)
-            });
-            this.items_statistics.push({
-              nuturition: "콜레스테롤(mg)",
-              amount: chole.toFixed(2)
-            });
-            this.items_statistics.push({
-              nuturition: "지방산(g)",
-              amount: fattyacid.toFixed(2)
-            });
-            this.items_statistics.push({
-              nuturition: "트랜스지방(g)",
-              amount: transfat.toFixed(2)
-            });
-            console.log(this.items_statistics);
+            if (this.items.length > 0) {
+              this.detail_flag = true;
+              this.items_statistics.push({
+                nuturition: "제공량(g)",
+                amount: parseFloat(supportpereat.toFixed(2))
+              });
+              this.items_statistics.push({
+                nuturition: "칼로리(kcal)",
+                amount: parseFloat(calory.toFixed(2))
+              });
+              this.items_statistics.push({
+                nuturition: "탄수화물(g)",
+                amount: parseFloat(carbo.toFixed(2))
+              });
+              this.items_statistics.push({
+                nuturition: "단백질(g)",
+                amount: parseFloat(protein.toFixed(2))
+              });
+              this.items_statistics.push({
+                nuturition: "지방(g)",
+                amount: parseFloat(fat.toFixed(2))
+              });
+              this.items_statistics.push({
+                nuturition: "당류(g)",
+                amount: parseFloat(sugar.toFixed(2))
+              });
+              this.items_statistics.push({
+                nuturition: "나트륨(mg)",
+                amount: parseFloat(natrium.toFixed(2))
+              });
+              this.items_statistics.push({
+                nuturition: "콜레스테롤(mg)",
+                amount: parseFloat(chole.toFixed(2))
+              });
+              this.items_statistics.push({
+                nuturition: "지방산(g)",
+                amount: parseFloat(fattyacid.toFixed(2))
+              });
+              this.items_statistics.push({
+                nuturition: "트랜스지방(g)",
+                amount: parseFloat(transfat.toFixed(2))
+              });
+              console.log(this.items_statistics);
+            } else {
+              this.detail_flag = false;
+            }
           });
           // this.posts = response.data;
           // console.log(this.posts);

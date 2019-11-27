@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql.intake.rest">
+	<select id="select" resultType="intake" parameterType="intake">
+		select * from intake where id=#{no} and date=#{date}
+	</select>
+	
+	<insert id="insert" parameterType="intake">
+		insert into
+		intake (id, date, code)
+		values(#{id}, #{date}, #{code})
+	</insert>
+
+	<delete id="delete" parameterType="intake">
+		delete from reply
+		where id=#{id} and date=#{date} and code=#{code}
+	</delete>
+</mapper>
+
+
+
+
+
+

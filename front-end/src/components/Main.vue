@@ -17,7 +17,7 @@
             <option value="material">영양정보</option>
           </select>
           <input type="text" v-model="contents" />
-          <input type="button" value="검색" @click="clickSearchButton" />
+          <b-button @click="clickSearchButton" variant="light">검색</b-button>
         </div>
       </nav>
     </article>

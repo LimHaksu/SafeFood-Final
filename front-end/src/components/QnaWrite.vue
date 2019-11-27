@@ -25,7 +25,7 @@
           <hr />
           <textarea style="width:700px; height:500px;" v-model="post.contents"></textarea>
           <br />
-          <b-button @click="wirte" variant="outline-primary">등록</b-button>
+          <b-button @click="write" variant="outline-primary">등록</b-button>
         </div>
       </div>
     </nav>

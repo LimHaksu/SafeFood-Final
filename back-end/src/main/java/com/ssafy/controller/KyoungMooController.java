@@ -1,15 +1,18 @@
 package com.ssafy.controller;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.ssafy.dto.Food;
+import com.ssafy.dto.Intake;
 import com.ssafy.dto.Post;
 import com.ssafy.dto.Reply;
 import com.ssafy.dto.User;
 import com.ssafy.service.BoardService;
 import com.ssafy.service.FoodService;
+import com.ssafy.service.IntakeService;
 import com.ssafy.service.ReplyService;
 import com.ssafy.service.UserService;
 import com.ssafy.util.HashUtil;
@@ -41,6 +44,9 @@ public class KyoungMooController {
 
 	@Autowired
 	private ReplyService replyService;
+
+	@Autowired
+	private IntakeService intakeService;
 
 	@GetMapping("foodlist")
 	public Map<String, Object> getFoods() {
@@ -159,6 +165,44 @@ public class KyoungMooController {
 		try {
 			Reply r = new Reply(no, writer, "");
 			boolean isSuccess = replyService.delete(r);
+			return response(isSuccess, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			throw e;
+		}
+	}
+
+	/*****************************************************************************/
+
+	@GetMapping("/intake/{id}/{date}")
+	public ResponseEntity<Object> getIntake(@PathVariable String id, @PathVariable Date date) {
+		try {
+			Intake intake = new Intake(id, date, 0);
+			List<Intake> intake_list = intakeService.select(intake);
+			return response(intake_list, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			throw e;
+		}
+	}
+
+	@PostMapping("/intake")
+	public ResponseEntity<Object> insertIntake(@RequestBody Intake intake) {
+		try {
+			System.out.println("시도");
+			boolean isSuccess = intakeService.insert(intake);
+			System.out.println("성공");
+			return response(isSuccess, HttpStatus.OK);
+		} catch (RuntimeException e) {
+			System.out.println("실패");
+			throw e;
+		}
+	}
+
+	@DeleteMapping("/intake/{id}/{date}/{code}")
+	public ResponseEntity<Object> deleteReply(@PathVariable String id, @PathVariable Date date,
+			@PathVariable Integer code) {
+		try {
+			Intake intake = new Intake(id, date, code);
+			boolean isSuccess = intakeService.delete(intake);
 			return response(isSuccess, HttpStatus.OK);
 		} catch (RuntimeException e) {
 			throw e;

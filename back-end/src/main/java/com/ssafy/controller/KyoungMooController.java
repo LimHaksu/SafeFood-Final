@@ -264,6 +264,15 @@ public class KyoungMooController {
 		}
 	}
 
+	@GetMapping("friend/{ownerId}")
+	public ResponseEntity<Object> getFriendList(@PathVariable String ownerId) {
+		User user = userService.findUser(ownerId);
+
+		String[] friends = user.getFriend().split(",");
+
+		return response(friends, HttpStatus.OK);
+	}
+
 	private ResponseEntity<Object> response(Object data, HttpStatus status) {
 		return new ResponseEntity<Object>(data, status);
 	}

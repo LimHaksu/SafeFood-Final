@@ -48,7 +48,7 @@
             </h2>
           </div>
         </template>
-        <template v-slot:cell(add)="row">
+        <template v-slot:cell(add)="row" v-if="authenticated">
           <b-button variant="primary" @click="clickAddition(row.item.code)">추가</b-button>
         </template>
       </b-table>

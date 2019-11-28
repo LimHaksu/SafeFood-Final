@@ -38,7 +38,7 @@
               </table>
               <div class="product elements-list">
                 <div class="btn-group">
-                  <a v-show="authenticated" class="btn btn-primary btn-sm" @click="clickAddition">추가</a>
+                  <a v-show="authenticated" class="btn btn-primary btn-sm" @click="clickAddition">먹기</a>
                   <a href="#" v-show="authenticated" class="btn btn-primary btn-sm">찜</a>
                 </div>
               </div>
@@ -258,10 +258,10 @@ export default {
       axios
         .post("http://" + this.$store.getters.myurl + "/intake", info)
         .then(() => {
-          alert("추가 되었습니다.");
+          alert("먹었습니다.(꺼억~)");
         })
         .catch(() => {
-          alert("이미 추가된 음식입니다.");
+          alert("이미 먹은 음식입니다.");
         });
     }
   }

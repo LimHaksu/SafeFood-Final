@@ -42,7 +42,7 @@
         <tr v-bind:key="r.writer">
           <div id="contents" v-show="!comments_modifyflag || r.writer!=user_id">
             <div style="padding:30px; border:1px solid #bcbcbc" align="left">{{r.comments}}</div>
-            <div v-if="r.writer==user_id">
+            <div v-if="r.writer==user_id" align="right" class="mt-2">
               <b-button @click="comments_modify(r.comments)" variant="outline-primary">답변 수정</b-button>
               <b-button @click="deleteComment" variant="danger">삭제</b-button>
             </div>

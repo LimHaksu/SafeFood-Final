@@ -49,7 +49,7 @@
           </div>
         </template>
         <template v-slot:cell(add)="row" v-if="authenticated">
-          <b-button variant="primary" @click="clickAddition(row.item.code)">추가</b-button>
+          <b-button variant="primary" @click="clickAddition(row.item.code)">먹기</b-button>
         </template>
       </b-table>
       <b-row>
@@ -146,10 +146,10 @@ export default {
       axios
         .post("http://" + this.$store.getters.myurl + "/intake", info)
         .then(() => {
-          alert("추가 되었습니다.");
+          alert("먹었습니다.");
         })
         .catch(() => {
-          alert("이미 추가된 음식입니다.");
+          alert("이미 먹은 음식입니다.");
         });
     }
   },

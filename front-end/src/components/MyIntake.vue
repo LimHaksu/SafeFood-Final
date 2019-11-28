@@ -18,7 +18,7 @@
                 <b-button
                   variant="danger"
                   @click="delete_food(row.item, row.index, $event.target)"
-                >안먹음</b-button>
+                >퉤</b-button>
               </template>
             </b-table>
           </b-container>

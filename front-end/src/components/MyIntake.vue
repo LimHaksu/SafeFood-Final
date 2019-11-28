@@ -166,7 +166,14 @@ export default {
         .toString();
 
       axios
-        .get("http://localhost:8080/intake/" + this.user_id + "/" + date_string)
+        .get(
+          "http://" +
+            this.$store.getters.myurl +
+            "/intake/" +
+            this.user_id +
+            "/" +
+            date_string
+        )
         .then(response => {
           let data = response.data;
           let supportpereat = 0;
@@ -183,7 +190,9 @@ export default {
           Promise.all(
             data.map(async info => {
               return axios
-                .get("http://localhost:8080/food/" + info.code)
+                .get(
+                  "http://" + this.$store.getters.myurl + "/food/" + info.code
+                )
                 .then(response => {
                   this.taken_foods.push(response.data);
                   this.items.push({
@@ -277,7 +286,9 @@ export default {
       console.log(button);
       axios
         .delete(
-          "http://localhost:8080/intake/" +
+          "http://" +
+            this.$store.getters.myurl +
+            "/intake/" +
             this.user_id +
             "/" +
             item.date +

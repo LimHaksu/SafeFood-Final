@@ -34,7 +34,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:8080/friend", info)
+        .post("http://" + this.$store.getters.myurl + "/friend", info)
         .then(() => {
           alert("추가 되었습니다.");
           this.getFriend();
@@ -45,7 +45,12 @@ export default {
     },
     getFriend() {
       axios
-        .get("http://localhost:8080/friend/" + this.$store.getters.user.id)
+        .get(
+          "http://" +
+            this.$store.getters.myurl +
+            "/friend/" +
+            this.$store.getters.user.id
+        )
         .then(res => {
           this.friend = res.data;
         })

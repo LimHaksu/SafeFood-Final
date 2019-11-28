@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {},
     getters: {
-        user: () => JSON.parse(sessionStorage.getItem('user'))
+        user: () => JSON.parse(sessionStorage.getItem('user')),
+        myurl: () => "70.12.107.164:8080"
     },
     mutations: {
         login(state, user) {

@@ -59,7 +59,7 @@ export default {
       this.authenticated = false;
     }
     axios
-      .get("http://localhost:8080/board")
+      .get("http://" + this.$store.getters.myurl + "/board")
       .then(response => {
         this.posts = response.data;
         this.posts.forEach(post => {

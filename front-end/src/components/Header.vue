@@ -157,8 +157,7 @@ export default {
     } else {
       this.authenticated = false;
     }
-    let tab_label = location.href.split("http://localhost:8081/")[1];
-    console.log(tab_label);
+    let tab_label = location.href.split("8081/")[1];
     if (tab_label == "") {
       this.tab = 1;
     } else if (tab_label == "my_intake") {
@@ -174,8 +173,8 @@ export default {
       let checkedStr = this.checked.join(",");
       this.signUpModel.allergy = checkedStr;
       axios
-        .post("http://localhost:8080/user", this.signUpModel)
-        .then(response => {
+        .post("http://" + this.$store.getters.myurl + "/user", this.signUpModel)
+        .then(() => {
           this.$refs["ref-modal-signup"].hide();
         })
         .catch(() => {
@@ -184,7 +183,7 @@ export default {
     },
     login() {
       axios
-        .post("http://localhost:8080/login", this.model)
+        .post("http://" + this.$store.getters.myurl + "/login", this.model)
         .then(response => {
           console.log(response.data);
           this.$store.commit("login", response.data);

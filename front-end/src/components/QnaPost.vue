@@ -114,7 +114,7 @@ export default {
         return;
       }
       axios
-        .put("http://localhost:8080/board/", this.post)
+        .put("http://" + this.$store.getters.myurl + "/board/", this.post)
         //.get('./emp.json')
         .then(response => {
           console.log(response);
@@ -137,7 +137,7 @@ export default {
       console.log(this.$store.getters.user);
       this.reply.writer = this.$store.getters.user.id;
       axios
-        .post("http://localhost:8080/reply/", this.reply)
+        .post("http://" + this.$store.getters.myurl + "/reply/", this.reply)
         //.get('./emp.json')
         .then(response => {
           console.log(response);
@@ -162,7 +162,7 @@ export default {
       this.reply.writer = this.$store.getters.user.id;
       console.log("코멘트 ", this.reply.comments);
       axios
-        .put("http://localhost:8080/reply/", this.reply)
+        .put("http://" + this.$store.getters.myurl + "/reply/", this.reply)
         .then(response => {
           console.log(response);
           console.log(this.reply);
@@ -186,7 +186,9 @@ export default {
     },
     deletePost() {
       axios
-        .delete("http://localhost:8080/board/" + this.post.no)
+        .delete(
+          "http://" + this.$store.getters.myurl + "/board/" + this.post.no
+        )
         .then(response => {
           response;
           console.log("삭제됐당");
@@ -203,14 +205,14 @@ export default {
       console.log("체크", this.reply);
       axios
         .delete(
-          "http://localhost:8080/reply/" +
+          "http://" +
+            this.$store.getters.myurl +
+            "/reply/" +
             this.reply.no +
             "/" +
             this.reply.writer
         )
         .then(() => {
-          console.log("코멘트는 삭제될까..?");
-
           this.$router.go(this.$router.currentRoute);
         })
         .catch(() => {
@@ -228,7 +230,7 @@ export default {
     }
 
     axios
-      .get("http://localhost:8080/board/" + paramValue)
+      .get("http://" + this.$store.getters.myurl + "/board/" + paramValue)
       //.get('./emp.json')
       .then(response => {
         this.post = response.data.post;

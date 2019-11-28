@@ -199,7 +199,7 @@ export default {
     }
     console.log(paramValue);
     axios
-      .get("http://localhost:8080/food/" + paramValue)
+      .get("http://" + this.$store.getters.myurl + "/food/" + paramValue)
       .then(response => {
         this.food = response.data;
         console.log(this.food);
@@ -256,7 +256,7 @@ export default {
       };
 
       axios
-        .post("http://localhost:8080/intake", info)
+        .post("http://" + this.$store.getters.myurl + "/intake", info)
         .then(() => {
           alert("추가 되었습니다.");
         })

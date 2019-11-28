@@ -109,7 +109,9 @@ export default {
 
       axios
         .get(
-          "http://localhost:8080/foodlist/" +
+          "http://" +
+            this.$store.getters.myurl +
+            "/foodlist/" +
             this.condition +
             "/" +
             this.contents
@@ -142,7 +144,7 @@ export default {
       console.log(info);
 
       axios
-        .post("http://localhost:8080/intake", info)
+        .post("http://" + this.$store.getters.myurl + "/intake", info)
         .then(() => {
           alert("추가 되었습니다.");
         })

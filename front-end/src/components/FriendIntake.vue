@@ -92,7 +92,14 @@ export default {
         .toString();
 
       axios
-        .get("http://localhost:8080/intake/" + this.myId + "/" + date_string)
+        .get(
+          "http://" +
+            this.$store.getters.myurl +
+            "/intake/" +
+            this.myId +
+            "/" +
+            date_string
+        )
         .then(response => {
           let data = response.data;
           let supportpereat = 0;
@@ -108,7 +115,9 @@ export default {
           Promise.all(
             data.map(async info => {
               return axios
-                .get("http://localhost:8080/food/" + info.code)
+                .get(
+                  "http://" + this.$store.getters.myurl + "/food/" + info.code
+                )
                 .then(response => {
                   this.myItems.push({
                     name: response.data.name,
@@ -194,7 +203,12 @@ export default {
       /* 여기부터 friend */
       axios
         .get(
-          "http://localhost:8080/intake/" + this.friendId + "/" + date_string
+          "http://" +
+            this.$store.getters.myurl +
+            "/intake/" +
+            this.friendId +
+            "/" +
+            date_string
         )
         .then(response => {
           let data = response.data;
@@ -211,7 +225,9 @@ export default {
           Promise.all(
             data.map(async info => {
               return axios
-                .get("http://localhost:8080/food/" + info.code)
+                .get(
+                  "http://" + this.$store.getters.myurl + "/food/" + info.code
+                )
                 .then(response => {
                   this.friendItems.push({
                     name: response.data.name,

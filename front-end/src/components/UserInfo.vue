@@ -158,7 +158,7 @@ export default {
       }
       console.log(this.user);
       axios
-        .put("http://localhost:8080/user/", this.user)
+        .put("http://" + this.$store.getters.myurl + "/user/", this.user)
         .then(response => {
           this.$store.commit("login", this.user);
           console.log(response);
@@ -174,7 +174,7 @@ export default {
     },
     remove_user() {
       axios
-        .delete("http://localhost:8080/user/" + this.user.id)
+        .delete("http://" + this.$store.getters.myurl + "/user/" + this.user.id)
         .then(response => {
           console.log(response);
           this.$store.commit("logout");

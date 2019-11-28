@@ -7,7 +7,6 @@
     <br />
     <ul v-for="f in friend" :key="f">
       <li>
-        <!-- TODO: # 대신에 이자식 섭취량 보러 가자 -->
         <a :href="'./friend_intake?friend=' + f">{{f}}</a>
       </li>
     </ul>
@@ -29,9 +28,6 @@ export default {
   },
   methods: {
     addFriend() {
-      console.log(this.id + "추가");
-      console.log(this.$store.getters.user.id + "세션 아이디");
-
       let info = {
         ownerId: this.$store.getters.user.id,
         friendId: this.id
@@ -40,17 +36,18 @@ export default {
       axios
         .post("http://localhost:8080/friend", info)
         .then(() => {
-          console.log("으악");
+          alert("추가 되었습니다.");
           this.getFriend();
         })
-        .catch(() => {});
+        .catch(() => {
+          alert("DB 없는 사람이거나 이미 추가했거나 자기 자신입니다.");
+        });
     },
     getFriend() {
       axios
         .get("http://localhost:8080/friend/" + this.$store.getters.user.id)
         .then(res => {
           this.friend = res.data;
-          console.log(this.friend);
         })
         .catch(() => {});
     }

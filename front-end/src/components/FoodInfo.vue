@@ -38,7 +38,7 @@
               </table>
               <div class="product elements-list">
                 <div class="btn-group">
-                  <a href="#" v-show="authenticated" class="btn btn-primary btn-sm">추가</a>
+                  <a v-show="authenticated" class="btn btn-primary btn-sm" @click="clickAddition">추가</a>
                   <a href="#" v-show="authenticated" class="btn btn-primary btn-sm">찜</a>
                 </div>
               </div>
@@ -108,6 +108,8 @@
 /* eslint-disable no-console */
 import axios from "axios";
 import chart from "./chart.js";
+import moment from "moment";
+
 var Request = function() {
   this.getParameter = function(name) {
     var rtnval = "";
@@ -198,7 +200,6 @@ export default {
     console.log(paramValue);
     axios
       .get("http://localhost:8080/food/" + paramValue)
-      //.get('./emp.json')
       .then(response => {
         this.food = response.data;
         console.log(this.food);
@@ -232,12 +233,37 @@ export default {
         this.pchartdata.datasets[0].data.push(this.food.chole / 1000);
         this.pchartdata.datasets[0].data.push(this.food.fattyacid);
         this.pchartdata.datasets[0].data.push(this.food.transfat);
-        console.log("데이터 넣기 완료");
       })
       .catch(() => {
         this.errored = true;
       })
       .finally(() => (this.loading = false));
+  },
+  methods: {
+    clickAddition() {
+      let sessionInfo = this.$store.getters.user.id;
+
+      if (sessionInfo == null) {
+        return;
+      }
+
+      let info = {
+        code: paramValue,
+        date: moment(new Date(Date.now()))
+          .format("YYYYMMDD")
+          .toString(),
+        id: sessionInfo
+      };
+
+      axios
+        .post("http://localhost:8080/intake", info)
+        .then(() => {
+          alert("추가 되었습니다.");
+        })
+        .catch(() => {
+          alert("이미 추가된 음식입니다.");
+        });
+    }
   }
 };
 </script>

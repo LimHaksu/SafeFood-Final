@@ -9,10 +9,10 @@
         내 섭취량
         <b-table :items="myNutrient" :fields="fields_statistics">
           <template v-slot:cell(nuturition)="row">
-            <a @click="nuturition_detail(row.item)">{{row.item.nuturition}}</a>
+            <a>{{row.item.nuturition}}</a>
           </template>
           <template v-slot:cell(amount)="row">
-            <a @click="nuturition_detail(row.item)">{{row.item.amount}}</a>
+            <a>{{row.item.amount}}</a>
           </template>
         </b-table>
       </b-col>
@@ -20,10 +20,10 @@
         {{friendId}}의 섭취량
         <b-table :items="friendNutrient" :fields="fields_statistics">
           <template v-slot:cell(nuturition)="row">
-            <a @click="nuturition_detail(row.item)">{{row.item.nuturition}}</a>
+            <a>{{row.item.nuturition}}</a>
           </template>
           <template v-slot:cell(amount)="row">
-            <a @click="nuturition_detail(row.item)">{{row.item.amount}}</a>
+            <a>{{row.item.amount}}</a>
           </template>
         </b-table>
       </b-col>
@@ -80,13 +80,7 @@ export default {
       friendId: paramValue
     };
   },
-  mounted() {
-    // this.myId = this.$store.getters.user.id;
-  },
   methods: {
-    nuturition_detail(nuturition) {
-      console.log(nuturition);
-    },
     dayClick(info) {
       this.selected_date = info;
       this.myItems = [];
@@ -132,12 +126,9 @@ export default {
                   sugar += response.data.sugar;
                   supportpereat += response.data.supportpereat;
                   transfat += response.data.transfat;
-                  // total add - end
-                  console.log("내부", carbo);
                 });
             })
           ).then(() => {
-            console.log("외부 ", carbo);
             if (this.myItems.length > 0) {
               this.detail_flag = true;
               this.myNutrient.push({
@@ -238,12 +229,9 @@ export default {
                   sugar += response.data.sugar;
                   supportpereat += response.data.supportpereat;
                   transfat += response.data.transfat;
-                  // total add - end
-                  console.log("내부", carbo);
                 });
             })
           ).then(() => {
-            console.log("외부 ", carbo);
             if (this.friendItems.length > 0) {
               this.detail_flag = true;
               this.friendNutrient.push({
@@ -296,7 +284,6 @@ export default {
                 nuturition: "트랜스지방(g)",
                 amount: parseFloat(transfat.toFixed(2))
               });
-              console.log(this.friendNutrient);
             } else {
               this.detail_flag = false;
             }

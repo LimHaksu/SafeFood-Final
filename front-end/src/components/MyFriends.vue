@@ -2,8 +2,16 @@
   <div class="mt-5">
     내친구
     <br />
-    <input type="text" v-model="id" />
-    <b-button @click="addFriend">추가</b-button>
+    <table align="center" class="mt-3">
+      <tr>
+        <td>
+          <b-input type="text" v-model="id" />
+        </td>
+        <td>
+          <b-button @click="addFriend" class="ml-2">추가</b-button>
+        </td>
+      </tr>
+    </table>
     <br />
     <ul v-for="f in friend" :key="f">
       <li>

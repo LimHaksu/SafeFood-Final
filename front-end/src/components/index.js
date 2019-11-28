@@ -8,6 +8,8 @@ import FoodInfo from './FoodInfo.vue'
 import UserInfo from './UserInfo.vue'
 import MyIntake from './MyIntake.vue'
 import MyFriends from './MyFriends.vue'
+import FriendIntake from './FriendIntake.vue'
+
 Vue.use(Router)
 export default new Router({
     mode: "history",
@@ -42,6 +44,10 @@ export default new Router({
         {
             path: '/my_friends',
             component: MyFriends
+        },
+        {
+            path: '/friend_intake',
+            component: FriendIntake
         }
     ]
 })

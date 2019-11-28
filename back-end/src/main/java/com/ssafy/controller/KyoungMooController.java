@@ -274,6 +274,10 @@ public class KyoungMooController {
 
 		System.out.println("user : " + user);
 
+		if (info.getOwnerId().equals(info.getFriendId())) {
+			return response(false, HttpStatus.FOUND);
+		}
+
 		if (user.getFriend() != null) {
 			String[] friends = user.getFriend().split(",");
 

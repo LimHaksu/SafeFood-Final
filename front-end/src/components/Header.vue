@@ -165,7 +165,7 @@ export default {
       this.tab = 2;
     } else if (tab_label == "my_friends") {
       this.tab = 3;
-    } else if (tab_label == "qna") {
+    } else if (tab_label.includes("qna")) {
       this.tab = 4;
     }
   },

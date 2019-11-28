@@ -1,16 +1,10 @@
 <template>
-  <div>
+  <div class="mt-3">
     내섭취정보
     <!-- <b-container> -->
     <b-row>
       <b-col>
-        <full-calendar
-          :event-sources="events"
-          @event-selected="eventSelected"
-          @day-click="dayClick"
-          :config="config"
-          :events="events"
-        />
+        <full-calendar @day-click="dayClick" :config="config" />
       </b-col>
       <b-col>
         <br />

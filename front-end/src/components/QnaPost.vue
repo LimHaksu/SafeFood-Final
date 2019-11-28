@@ -1,5 +1,5 @@
 <template>
-  <div class="container" id="post">
+  <div class="container mt-4" id="post">
     <!-- 여기에 게시판 작성 -->
     <table class="table table-hover">
       <thead>
@@ -17,39 +17,33 @@
         </tr>
       </tbody>
     </table>
-    <span style="color:black">
-      <h5>내용</h5>
-    </span>
     <div id="contents" v-show="!contents_modifyflag">
       <!--여기에 본문-->
-      {{post.contents}}
-      <br />
-      <b-button v-if="post.writer==user_id" @click="contents_modify" variant="outline-primary">수정</b-button>
-      <b-button v-if="post.writer==user_id" @click="deletePost" variant="danger">삭제</b-button>
+      <div style="padding:30px; border:1px solid #bcbcbc" align="left">{{post.contents}}</div>
+      <div v-if="post.writer==user_id" class="mt-2" align="right">
+        <b-button @click="contents_modify" variant="outline-primary">본문 수정</b-button>
+        <b-button @click="deletePost" variant="danger">삭제</b-button>
+      </div>
     </div>
     <div id="contents" v-show="contents_modifyflag">
       <textarea style="width:700px; height:300px;" v-model="post.contents"></textarea>
       <br />
       <b-button @click="writePost" variant="primary">등록</b-button>
     </div>
-    <hr />
+    <hr size="10" />
     <span style="color:black">
-      <h5>답변</h5>
+      <h5 align="left">답변</h5>
     </span>
     <table class="table table-hover">
       <template v-for="r in reply_list">
         <tr v-bind:key="r.writer">
-          <th>작성자</th>
+          <td align="left">작성자 : {{r.writer}}</td>
         </tr>
         <tr v-bind:key="r.writer">
-          <td>{{r.writer}}</td>
-        </tr>
-        <tr v-bind:key="r.writer">
-          <br />
           <div id="contents" v-show="!comments_modifyflag || r.writer!=user_id">
-            {{r.comments}}
+            <div style="padding:30px; border:1px solid #bcbcbc" align="left">{{r.comments}}</div>
             <div v-if="r.writer==user_id">
-              <b-button @click="comments_modify(r.comments)" variant="outline-primary">수정</b-button>
+              <b-button @click="comments_modify(r.comments)" variant="outline-primary">답변 수정</b-button>
               <b-button @click="deleteComment" variant="danger">삭제</b-button>
             </div>
           </div>
@@ -58,12 +52,16 @@
             <br />
             <b-button @click="updateComment" variant="primary">등록</b-button>
           </div>
+          <hr />
         </tr>
       </template>
       <div v-if="authenticated && !find_my_comments" id="comments">
-        <textarea style="width:700px; height:300px;" v-model="reply.comments"></textarea>
-        <br />
-        <b-button @click="writeComment" variant="primary">등록</b-button>
+        <div style="border:1px solid #bcbcbc">
+          <b-textarea v-model="reply.comments"></b-textarea>
+        </div>
+        <div align="right">
+          <b-button class="mt-2" @click="writeComment" variant="primary">답변 등록</b-button>
+        </div>
       </div>
     </table>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-5">
     내친구
     <br />
     <input type="text" v-model="id" />

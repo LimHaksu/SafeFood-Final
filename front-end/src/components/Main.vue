@@ -10,18 +10,32 @@
         <p>건강한 삶을 위한 먹거리 프로젝트</p>
       </div>
       <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="padding: 20px;">
-        <div>
-          <select name="country_id" v-model="condition">
-            <option value="name">상품명</option>
-            <option value="maker">제조사</option>
-            <option value="material">영양정보</option>
-          </select>
-          <input type="text" v-model="contents" />
-          <b-button @click="clickSearchButton" variant="light">검색</b-button>
-        </div>
+        <table>
+          <tr>
+            <td>
+              <b-select name="country_id" v-model="condition">
+                <option value="name">상품명</option>
+                <option value="maker">제조사</option>
+                <option value="material">영양정보</option>
+              </b-select>
+            </td>
+            <td>
+              <b-input type="text" v-model="contents" />
+            </td>
+            <td>
+              <b-button @click="clickSearchButton" variant="light">검색</b-button>
+            </td>
+          </tr>
+        </table>
       </nav>
     </article>
-
+    <!-- <b-table
+      id="board-table"
+      :items="foodList"
+      :fields="fields"
+      :per-page="perPage"
+      :current-page="currentPage"
+    ></b-table>-->
     <table border="0" cellspacing="0" cellpadding="0">
       <tr v-for="food in foodList" v-bind:key="food.name">
         <td align="left" valign="top">

@@ -1,30 +1,33 @@
 <template>
 <body>
-  <div class="container">
+  <b-container class="mt-5">
     <!-- 여기에 게시판 작성 -->
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th style="width:400px">제목</th>
-          <th>작성자</th>
-        </tr>
-      </thead>
-      <tbody id="listtemplate">
-        <tr v-for="post in posts" v-bind:key="post.no">
-          <td>{{post.no}}</td>
-          <td>
-            <!-- TODO: 페이지 이동을 router를 이용하게 하자 -->
-            <a :href="'./qna_post?no='+post.no">{{post.title}}</a>
-            <!-- <a @click="getPost(post.title)">{{post.title}}</a> -->
-          </td>
-          <td>{{post.writer}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <b-table
+      id="board-table"
+      :items="items"
+      :fields="fields"
+      :per-page="perPage"
+      :current-page="currentPage"
+    >
+      <template v-slot:cell(title)="row">
+        <a :href="'./qna_post?no='+row.item.no">{{row.item.title}}</a>
+      </template>
+    </b-table>
     <hr />
-    <b-button v-if="authenticated" href="./qna_write" variant="outline-primary">글쓰기</b-button>
-  </div>
+    <b-row>
+      <b-col>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="board-table"
+        ></b-pagination>
+      </b-col>
+      <b-col align="right">
+        <b-button v-if="authenticated" href="./qna_write" variant="outline-primary">글쓰기</b-button>
+      </b-col>
+    </b-row>
+  </b-container>
 </body>
 </template>
 
@@ -38,7 +41,15 @@ export default {
     return {
       posts: [],
       errored: false,
-      authenticated: false
+      authenticated: false,
+      perPage: 10,
+      items: [],
+      fields: [
+        { key: "no", label: "번호" },
+        { key: "title", label: "제목" },
+        { key: "writer", label: "작성자" }
+      ],
+      currentPage: 1
     };
   },
   mounted() {
@@ -51,11 +62,23 @@ export default {
       .get("http://localhost:8080/board")
       .then(response => {
         this.posts = response.data;
+        this.posts.forEach(post => {
+          this.items.push({
+            no: post.no,
+            title: post.title,
+            writer: post.writer
+          });
+        });
         console.log(this.posts);
       })
       .catch(() => {
         this.errored = true;
       });
+  },
+  computed: {
+    rows() {
+      return this.items.length;
+    }
   }
   // methods: {
   //   getPost(title) {

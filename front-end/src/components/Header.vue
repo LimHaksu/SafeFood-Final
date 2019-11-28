@@ -118,48 +118,23 @@
       </template>
     </b-modal>
 
-    <nav class="navbar navbar-expand-sm navbar-white bg-white">
-      <div class="collapse navbar-collapse" id="info">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a href="./" class="nav-link">메인</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a href="#" class="nav-link">공지사항</a>
-          </li>
-          <li class="nav-item" id="btn_product_info">
-            <a href="#" class="nav-link">상품정보</a>
-          </li>-->
-          <!-- <li class="nav-item">
-            <a href="#" class="nav-link">베스트 섭취 정보</a>
-          </li>-->
-          <li class="nav-item" v-if="authenticated">
-            <a href="./my_intake" class="nav-link">내 섭취 정보</a>
-          </li>
-          <li class="nav-item" v-if="authenticated">
-            <a href="./my_friends" class="nav-link">내 친구</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a href="#" class="nav-link">예상 섭취 정보</a>
-          </li>-->
-          <!-- <li class="nav-item">
-            <a href="#" class="nav-link">검색</a>
-          </li>-->
-          <li class="nav-item">
-            <a href="./qna" class="nav-link">Q&A</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <b-nav tabs>
+      <b-nav-item v-bind:active="tab === 1" href="./">메인</b-nav-item>
+      <b-nav-item v-bind:active="tab === 2" href="./my_intake" v-if="authenticated">내 섭취 정보</b-nav-item>
+      <b-nav-item v-bind:active="tab === 3" href="./my_friends" v-if="authenticated">내 친구</b-nav-item>
+      <b-nav-item v-bind:active="tab === 4" href="./qna">Q&A</b-nav-item>
+    </b-nav>
   </header>
 </template>
 
 <script>
 import axios from "axios";
 /* eslint-disable no-console */
+
 export default {
   data() {
     return {
+      tab: 1,
       model: {
         id: "",
         password: ""
@@ -181,6 +156,17 @@ export default {
       this.authenticated = true;
     } else {
       this.authenticated = false;
+    }
+    let tab_label = location.href.split("http://localhost:8081/")[1];
+    console.log(tab_label);
+    if (tab_label == "") {
+      this.tab = 1;
+    } else if (tab_label == "my_intake") {
+      this.tab = 2;
+    } else if (tab_label == "my_friends") {
+      this.tab = 3;
+    } else if (tab_label == "qna") {
+      this.tab = 4;
     }
   },
   methods: {

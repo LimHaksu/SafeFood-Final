@@ -8,7 +8,7 @@
     <ul v-for="f in friend" :key="f">
       <li>
         <!-- TODO: # 대신에 이자식 섭취량 보러 가자 -->
-        <a href="#">{{f}}</a>
+        <a :href="'./friend_intake?friend=' + f">{{f}}</a>
       </li>
     </ul>
   </div>
@@ -16,7 +16,7 @@
 <script>
 /* eslint-disable no-console */
 import axios from "axios";
-/* eslint-disable no-console */
+
 export default {
   data() {
     return {

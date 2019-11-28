@@ -103,8 +103,6 @@ export default {
   },
   methods: {
     clickSearchButton() {
-      console.log("클릭!");
-
       if (this.contents == "") {
         this.contents = "*";
       }
@@ -127,8 +125,6 @@ export default {
         });
     },
     clickAddition(foodCode) {
-      console.log("whoa");
-
       let sessionInfo = this.$store.getters.user.id;
 
       if (sessionInfo == null) {
@@ -147,8 +143,12 @@ export default {
 
       axios
         .post("http://localhost:8080/intake", info)
-        .then(() => {})
-        .catch();
+        .then(() => {
+          alert("추가 되었습니다.");
+        })
+        .catch(() => {
+          alert("이미 추가된 음식입니다.");
+        });
     }
   },
   computed: {

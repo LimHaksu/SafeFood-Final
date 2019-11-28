@@ -170,30 +170,22 @@ export default {
     }
   },
   methods: {
-    /* eslint-disable no-console */
-
     signUp() {
       let checkedStr = this.checked.join(",");
-      console.log("체크 ", checkedStr);
       this.signUpModel.allergy = checkedStr;
-      console.log(this.signUpModel);
       axios
         .post("http://localhost:8080/user", this.signUpModel)
         .then(response => {
-          console.log("가입됐는데 확인해볼래?");
-          console.log(response);
           this.$refs["ref-modal-signup"].hide();
         })
         .catch(() => {
-          console.log("가입 안됨");
+          alert("가입 실패");
         });
     },
     login() {
       axios
         .post("http://localhost:8080/login", this.model)
-        //.get('./emp.json')
         .then(response => {
-          /* eslint-disable no-console */
           console.log(response.data);
           this.$store.commit("login", response.data);
           this.authenticated = true;

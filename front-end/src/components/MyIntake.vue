@@ -132,8 +132,6 @@ export default {
     nuturition_detail(nuturition) {
       let nkey = nuturition.key;
       this.clicked_nuturition = nuturition.nuturition;
-      console.log(nuturition);
-      console.log(this.taken_foods);
       this.pchartdata.labels = [];
       this.pchartdata.datasets[0].data = [];
       this.taken_foods.forEach(food => {
@@ -166,7 +164,6 @@ export default {
       let date_string = moment(info._d)
         .format("YYYYMMDD")
         .toString();
-      // console.log(date_string);
 
       axios
         .get("http://localhost:8080/intake/" + this.user_id + "/" + date_string)
@@ -189,7 +186,6 @@ export default {
                 .get("http://localhost:8080/food/" + info.code)
                 .then(response => {
                   this.taken_foods.push(response.data);
-                  // console.log(response.data);
                   this.items.push({
                     name: response.data.name,
                     code: response.data.code,
@@ -206,12 +202,9 @@ export default {
                   sugar += response.data.sugar;
                   supportpereat += response.data.supportpereat;
                   transfat += response.data.transfat;
-                  // total add - end
-                  console.log("내부", carbo);
                 });
             })
           ).then(() => {
-            console.log("외부 ", carbo);
             if (this.items.length > 0) {
               this.detail_flag = true;
               this.items_statistics.push({

@@ -163,7 +163,7 @@ export default {
       this.tab = 1;
     } else if (tab_label == "my_intake") {
       this.tab = 2;
-    } else if (tab_label == "my_friends") {
+    } else if (tab_label.includes("friend")) {
       this.tab = 3;
     } else if (tab_label.includes("qna")) {
       this.tab = 4;

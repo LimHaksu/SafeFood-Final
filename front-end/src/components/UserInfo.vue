@@ -1,9 +1,5 @@
 <template>
   <div class="jumbotron">
-    <h2>
-      <strong>User Information</strong>
-    </h2>
-
     <form id="user_info">
       <h1 style="text-align:left">회원정보수정</h1>
       <table id="table_signup">

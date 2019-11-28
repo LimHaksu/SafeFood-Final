@@ -10,7 +10,7 @@
         <p>건강한 삶을 위한 먹거리 프로젝트</p>
       </div>
       <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="padding: 20px;">
-        <table>
+        <table align="center">
           <tr>
             <td>
               <b-select name="country_id" v-model="condition">
@@ -29,47 +29,41 @@
         </table>
       </nav>
     </article>
-    <!-- <b-table
-      id="board-table"
-      :items="foodList"
-      :fields="fields"
-      :per-page="perPage"
-      :current-page="currentPage"
-    ></b-table>-->
-    <table border="0" cellspacing="0" cellpadding="0">
-      <tr v-for="food in foodList" v-bind:key="food.name">
-        <td align="left" valign="top">
-          <img width="200px" :src="require(`@/assets/${food.img}`)" />
-        </td>
-        <td class="product_contents" width="*" align="left" valign="top">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td width="*" valign="top">
-                <div class="ss_book_list">
-                  <ul>
-                    <li>
-                      <h1>
-                        <a :href="'./food_info?foodCode='+food.code">{{food.name}}</a>
-                      </h1>
-                      <hr />
-                    </li>
-                    <li>{{food.material}}</li>
-                    <li>
-                      <button
-                        v-show="authenticated"
-                        class="btn btn-primary btn-sm"
-                        @click="clickAddition(food.code)"
-                      >추가</button>
-                      <button v-show="authenticated" id="btn_zzim" class="btn btn-primary btn-sm">찜</button>
-                    </li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
+    <b-container v-if="rows>0">
+      <b-table
+        id="search-table"
+        thead-class="hidden_header"
+        :items="foodList"
+        :fields="fields"
+        :per-page="perPage"
+        :current-page="currentPage"
+      >
+        <template v-slot:cell(img)="row">
+          <img width="150px" :src="require(`@/assets/${row.item.img}`)" />
+        </template>
+        <template v-slot:cell(name)="row" align-middle>
+          <div class="align-middle">
+            <h2>
+              <a :href="'./food_info?foodCode='+row.item.code">{{row.item.name}}</a>
+            </h2>
+          </div>
+        </template>
+        <template v-slot:cell(add)="row">
+          <b-button variant="primary" @click="clickAddition(row.item.code)">추가</b-button>
+        </template>
+      </b-table>
+      <b-row>
+        <b-col>
+          <b-pagination
+            align="center"
+            v-model="currentPage"
+            :total-rows="rows"
+            :per-page="perPage"
+            aria-controls="board-table"
+          ></b-pagination>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -84,7 +78,20 @@ export default {
       authenticated: false,
       condition: "name",
       contents: "",
-      foodList: []
+      foodList: [],
+      fields: [
+        { key: "img", label: "" },
+        {
+          key: "name",
+          label: "상품명",
+          tdClass: "align-middle"
+        },
+        { key: "maker", label: "제조사", tdClass: "align-middle" },
+        { key: "calory", label: "칼로리(kcal)", tdClass: "align-middle" },
+        { key: "add", label: "", tdClass: "align-middle" }
+      ],
+      perPage: 5,
+      currentPage: 1
     };
   },
   mounted() {
@@ -143,6 +150,17 @@ export default {
         .then(() => {})
         .catch();
     }
+  },
+  computed: {
+    rows() {
+      return this.foodList.length;
+    }
   }
 };
 </script>
+<style>
+.nameClass {
+  max-width: 400px;
+  vertical-align: middle;
+}
+</style>
